@@ -1,0 +1,410 @@
+{
+  "info": {
+    "name": "Autos Colombia - API REST",
+    "description": "Colección de Postman para probar la API del sistema de parqueadero Autos Colombia - Iteración 1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login - Administrador",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"admin@autoscolombia.com\",\n  \"clave\": \"clave123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Operador",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"operador@autoscolombia.com\",\n  \"clave\": \"clave123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener usuario actual",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "me"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Registros",
+      "item": [
+        {
+          "name": "Registrar entrada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"ABC123\",\n  \"marca\": \"Toyota\",\n  \"modelo\": \"Corolla\",\n  \"color\": \"Rojo\",\n  \"tipo\": \"CARRO\",\n  \"propietarioDocumento\": \"12345678\",\n  \"propietarioNombre\": \"Juan Pérez\",\n  \"propietarioTelefono\": \"3001234567\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/registros/entrada",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "registros", "entrada"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registrar salida",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observaciones\": \"Sin novedades\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/registros/salida/ABC123",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "registros", "salida", "ABC123"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar registros activos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/registros/activos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "registros", "activos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener registro por placa",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/registros/ABC123",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "registros", "ABC123"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Últimos ingresos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/registros/ultimos?limite=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "registros", "ultimos"],
+              "query": [
+                {
+                  "key": "limite",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vehículos",
+      "item": [
+        {
+          "name": "Buscar vehículos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/vehiculos?criterio=ABC",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "vehiculos"],
+              "query": [
+                {
+                  "key": "criterio",
+                  "value": "ABC"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear vehículo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placa\": \"XYZ987\",\n  \"marca\": \"Mazda\",\n  \"modelo\": \"3\",\n  \"color\": \"Azul\",\n  \"tipo\": \"CARRO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/vehiculos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "vehiculos"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Celdas",
+      "item": [
+        {
+          "name": "Listar celdas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/celdas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "celdas"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Novedades",
+      "item": [
+        {
+          "name": "Registrar novedad",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"registroId\": 1,\n  \"tipo\": \"RAYON\",\n  \"descripcion\": \"Rayón en puerta izquierda\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/novedades",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "novedades"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar novedades pendientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/novedades/pendientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "novedades", "pendientes"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reportes",
+      "item": [
+        {
+          "name": "Obtener dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/reportes/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "reportes", "dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generar reporte ocupación CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/reportes/ocupacion?desde=2026-01-01&hasta=2026-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "reportes", "ocupacion"],
+              "query": [
+                {
+                  "key": "desde",
+                  "value": "2026-01-01"
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-12-31"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Usuarios (Solo Admin)",
+      "item": [
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "usuarios"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

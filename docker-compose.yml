@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD en el entorno}
+      POSTGRES_DB: garajeautomovil
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d garajeautomovil"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: garajeautomovil
+      DB_USER: postgres
+      DB_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD en el entorno}
+      JWT_SECRET: ${JWT_SECRET:?Define JWT_SECRET en el entorno}
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:

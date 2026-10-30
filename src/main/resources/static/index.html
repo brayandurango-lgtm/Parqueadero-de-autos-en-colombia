@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142b52">
+  <title>Autos Colombia | Control de parqueadero</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <section id="login-view" class="login-screen">
+    <form id="login-form" class="login-card">
+      <div class="brand-mark">AC</div>
+      <p class="eyebrow">CONTROL DE PARQUEADERO</p>
+      <h1>Autos Colombia</h1>
+      <p class="muted">Ingresa para administrar entradas y salidas.</p>
+      <label for="email">Correo electrónico</label>
+      <input id="email" name="correo" type="email" autocomplete="username" placeholder="operador@autoscolombia.com" required>
+      <label for="password">Contraseña</label>
+      <input id="password" name="clave" type="password" autocomplete="current-password" required>
+      <button class="button primary full" type="submit">Iniciar sesión</button>
+      <p id="login-error" class="error-text" role="alert"></p>
+      <p class="login-note">Acceso seguro para personal autorizado.</p>
+    </form>
+  </section>
+
+  <div id="app-view" class="app-shell" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard"><span class="brand-mark small">AC</span><span>Autos<span class="brand-light"> Colombia</span></span></a>
+      <p class="nav-caption">OPERACIÓN</p>
+      <nav aria-label="Navegación principal">
+        <button class="nav-link active" data-view="dashboard">▦ <span>Resumen</span></button>
+        <button class="nav-link" data-view="entrada">↘ <span>Registrar entrada</span></button>
+        <button class="nav-link" data-view="salida">↗ <span>Registrar salida</span></button>
+        <button class="nav-link" data-view="novedades">⚑ <span>Novedades</span></button>
+      </nav>
+      <div class="sidebar-bottom"><span class="online-dot"></span> Sistema operativo</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">PARQUEADERO · OPERACIÓN DIARIA</p><h2 id="page-title">Resumen</h2></div>
+        <div class="profile"><span id="user-initials" class="avatar">AC</span><div><strong id="user-name">Usuario</strong><small id="user-role">Personal</small></div><button id="logout-button" class="button text-button">Salir</button></div>
+      </header>
+
+      <section id="dashboard-view" class="view-section">
+        <div class="welcome-row"><div><h1>Panel de ocupación</h1><p class="muted">Estado actual de las instalaciones y actividad reciente.</p></div><button class="button primary" data-go="entrada">＋ Nueva entrada</button></div>
+        <div class="metric-grid">
+          <article class="metric-card"><span class="metric-icon blue">▦</span><span class="metric-label">Capacidad total</span><strong id="metric-total">—</strong><small>celdas habilitadas</small></article>
+          <article class="metric-card"><span class="metric-icon green">✓</span><span class="metric-label">Disponibles</span><strong id="metric-free">—</strong><small>espacios libres</small></article>
+          <article class="metric-card"><span class="metric-icon orange">↗</span><span class="metric-label">Ocupadas</span><strong id="metric-occupied">—</strong><small>vehículos en el patio</small></article>
+          <article class="metric-card"><span class="metric-icon violet">◷</span><span class="metric-label">Ocupación</span><strong id="metric-percent">—</strong><small>porcentaje actual</small></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel"><div class="panel-heading"><div><h3>Ingresos recientes</h3><p class="muted">Últimos movimientos registrados</p></div><button class="button subtle" data-go="salida">Gestionar salidas →</button></div>
+            <div class="table-wrap"><table><thead><tr><th>Placa</th><th>Vehículo</th><th>Celda</th><th>Entrada</th><th>Estado</th></tr></thead><tbody id="recent-rows"><tr><td colspan="5" class="empty-state">Cargando actividad…</td></tr></tbody></table></div>
+          </article>
+          <article class="panel occupancy-panel"><div class="panel-heading"><div><h3>Capacidad del patio</h3><p class="muted">Ocupación en tiempo real</p></div></div><div class="occupancy-number"><strong id="occupancy-large">—</strong><span>de espacios ocupados</span></div><div class="progress-track"><span id="occupancy-progress"></span></div><p id="occupancy-caption" class="muted">Actualizando indicadores…</p><div class="info-note">Las cifras se consultan desde la API de Autos Colombia.</div></article>
+        </div>
+      </section>
+
+      <section id="entrada-view" class="view-section" hidden>
+        <div class="section-intro"><span class="section-icon blue">↘</span><div><h1>Registrar entrada</h1><p class="muted">Registra el vehículo y el sistema asignará una celda disponible.</p></div></div>
+        <form id="entry-form" class="panel form-panel"><h3>Datos del vehículo</h3><div class="form-grid">
+          <div class="field"><label for="entry-plate">Placa</label><input id="entry-plate" name="placa" placeholder="ABC123" maxlength="7" pattern="(?:[A-Za-z]{3}[0-9]{3}|[A-Za-z]{2}[0-9]{3}[A-Za-z])" required></div>
+          <div class="field"><label for="entry-type">Tipo</label><select id="entry-type" name="tipo" required><option value="CARRO">Carro</option><option value="MOTO">Moto</option><option value="CAMIONETA">Camioneta</option></select></div>
+          <div class="field"><label for="entry-make">Marca</label><input id="entry-make" name="marca" maxlength="50" required></div>
+          <div class="field"><label for="entry-model">Modelo</label><input id="entry-model" name="modelo" maxlength="50" required></div>
+          <div class="field"><label for="entry-color">Color</label><input id="entry-color" name="color" maxlength="30" required></div>
+          <div class="field"><label for="owner-name">Nombre del propietario <span>(opcional)</span></label><input id="owner-name" name="propietarioNombre" maxlength="120"></div>
+          <div class="field"><label for="owner-document">Documento <span>(opcional)</span></label><input id="owner-document" name="propietarioDocumento" maxlength="20"></div>
+          <div class="field"><label for="owner-phone">Teléfono <span>(opcional)</span></label><input id="owner-phone" name="propietarioTelefono" maxlength="20"></div>
+        </div><div id="entry-result" class="result-box" hidden></div><div class="form-actions"><button type="reset" class="button subtle">Limpiar</button><button type="submit" class="button primary">Registrar vehículo</button></div></form>
+      </section>
+
+      <section id="salida-view" class="view-section" hidden>
+        <div class="section-intro"><span class="section-icon orange">↗</span><div><h1>Registrar salida</h1><p class="muted">Busca la placa activa para finalizar la estancia y liberar la celda.</p></div></div>
+        <form id="exit-search-form" class="panel search-panel"><label for="exit-plate">Placa del vehículo</label><div class="search-row"><input id="exit-plate" placeholder="ABC123" maxlength="7" required><button class="button primary" type="submit">Buscar vehículo</button></div></form>
+        <div id="exit-result" class="panel exit-card" hidden></div>
+      </section>
+
+      <section id="novedades-view" class="view-section" hidden>
+        <div class="section-intro"><span class="section-icon violet">⚑</span><div><h1>Registrar novedad</h1><p class="muted">Deja constancia de un incidente asociado a una estancia activa.</p></div></div>
+        <form id="incident-form" class="panel form-panel"><h3>Detalle del incidente</h3><div class="form-grid">
+          <div class="field"><label for="incident-record">ID del registro</label><input id="incident-record" type="number" min="1" required></div>
+          <div class="field"><label for="incident-type">Tipo de novedad</label><select id="incident-type"><option>RAYON</option><option>DANO_MECANICO</option><option>OBJETO_CAIDO</option><option>ROBO_PARCIAL</option><option>OTRO</option></select></div>
+          <div class="field wide"><label for="incident-description">Descripción</label><textarea id="incident-description" rows="4" required></textarea></div>
+          <div class="field wide"><label for="incident-evidence">URL de evidencia <span>(opcional)</span></label><input id="incident-evidence" type="url" placeholder="https://..."></div>
+        </div><div class="form-actions"><button class="button primary" type="submit">Guardar novedad</button></div></form>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

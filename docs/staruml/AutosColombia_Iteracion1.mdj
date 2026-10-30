@@ -1,0 +1,918 @@
+{
+  "_type": "Project",
+  "_id": "PROJ_1000",
+  "name": "Autos Colombia - Sistema de Informacion (Iteracion 1)",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "MODEL_1001",
+      "name": "Modelo de Software - Autos Colombia",
+      "ownedElements": [
+        {
+          "_type": "UMLUseCaseDiagram",
+          "_id": "DIAG_UC_1145",
+          "name": "Diagrama de Casos de Uso - Autos Colombia Iteracion 1"
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "DIAG_CLS_1146",
+          "name": "Diagrama de Clases del Dominio - Autos Colombia Iteracion 1"
+        },
+        {
+          "_type": "UMLPackageDiagram",
+          "_id": "DIAG_PKG_1147",
+          "name": "Diagrama de Paquetes Arquitectonicos - Autos Colombia"
+        },
+        {
+          "_type": "UMLDeploymentDiagram",
+          "_id": "DIAG_DEP_1148",
+          "name": "Arquitectura del Sistema - C4 Contenedores y Despliegue"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "ACT_1110",
+          "name": "Operador de Parqueadero"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "ACT_1111",
+          "name": "Administrador del Sistema"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "ACT_1112",
+          "name": "Reloj / Calendario Distrital"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1097",
+          "name": "CU-01: Iniciar Sesion (JWT)"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1098",
+          "name": "CU-02: Registrar Entrada de Vehiculo"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1099",
+          "name": "CU-03: Validar Pico y Placa"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1100",
+          "name": "CU-04: Asignar Celda Automatica"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1101",
+          "name": "CU-05: Emitir Comprobante con QR"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1102",
+          "name": "CU-06: Registrar Salida de Vehiculo"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1103",
+          "name": "CU-07: Liberar Celda de Parqueo"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1104",
+          "name": "CU-08: Registrar Novedad / Incidente"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1105",
+          "name": "CU-09: Cancelar Registro Activo"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1106",
+          "name": "CU-10: Consultar Celdas y Vehiculos"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1107",
+          "name": "CU-11: Visualizar Dashboard de Ocupacion"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1108",
+          "name": "CU-12: Exportar Reporte de Ocupacion (CSV)"
+        },
+        {
+          "_type": "UMLUseCase",
+          "_id": "UC_1109",
+          "name": "CU-13: Auditar Operaciones Criticas"
+        },
+        {
+          "_type": "UMLEnumeration",
+          "_id": "ENUM_1002",
+          "name": "TipoUsuario",
+          "literals": [
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1003",
+              "name": "ADMINISTRADOR"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1004",
+              "name": "OPERADOR"
+            }
+          ]
+        },
+        {
+          "_type": "UMLEnumeration",
+          "_id": "ENUM_1005",
+          "name": "TipoVehiculo",
+          "literals": [
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1006",
+              "name": "CARRO"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1007",
+              "name": "MOTO"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1008",
+              "name": "CAMIONETA"
+            }
+          ]
+        },
+        {
+          "_type": "UMLEnumeration",
+          "_id": "ENUM_1009",
+          "name": "EstadoCelda",
+          "literals": [
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1010",
+              "name": "DISPONIBLE"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1011",
+              "name": "OCUPADA"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1012",
+              "name": "MANTENIMIENTO"
+            }
+          ]
+        },
+        {
+          "_type": "UMLEnumeration",
+          "_id": "ENUM_1013",
+          "name": "EstadoRegistro",
+          "literals": [
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1014",
+              "name": "ACTIVO"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1015",
+              "name": "CERRADO"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1016",
+              "name": "CANCELADO"
+            }
+          ]
+        },
+        {
+          "_type": "UMLEnumeration",
+          "_id": "ENUM_1017",
+          "name": "TipoComprobante",
+          "literals": [
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1018",
+              "name": "ENTRADA"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1019",
+              "name": "SALIDA"
+            }
+          ]
+        },
+        {
+          "_type": "UMLEnumeration",
+          "_id": "ENUM_1020",
+          "name": "TipoNovedad",
+          "literals": [
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1021",
+              "name": "RAYON"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1022",
+              "name": "DANO_MECANICO"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1023",
+              "name": "OBJETO_CAIDO"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1024",
+              "name": "ROBO_PARCIAL"
+            },
+            {
+              "_type": "UMLEnumerationLiteral",
+              "_id": "LIT_1025",
+              "name": "OTRO"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1026",
+          "name": "Usuario",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1027",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1028",
+              "name": "nombre",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1029",
+              "name": "apellido",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1030",
+              "name": "documento",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1031",
+              "name": "correo",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1032",
+              "name": "telefono",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1033",
+              "name": "claveHash",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1034",
+              "name": "tipo",
+              "visibility": "private",
+              "type": "TipoUsuario"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1035",
+              "name": "activo",
+              "visibility": "private",
+              "type": "Boolean"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1036",
+              "name": "fechaRegistro",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1037",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1038",
+          "name": "Vehiculo",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1039",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1040",
+              "name": "placa",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1041",
+              "name": "marca",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1042",
+              "name": "modelo",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1043",
+              "name": "color",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1044",
+              "name": "tipo",
+              "visibility": "private",
+              "type": "TipoVehiculo"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1045",
+              "name": "propietarioDocumento",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1046",
+              "name": "propietarioNombre",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1047",
+              "name": "propietarioTelefono",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1048",
+              "name": "fechaRegistro",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1049",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1050",
+          "name": "Celda",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1051",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1052",
+              "name": "numero",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1053",
+              "name": "piso",
+              "visibility": "private",
+              "type": "Integer"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1054",
+              "name": "tipoVehiculo",
+              "visibility": "private",
+              "type": "TipoVehiculo"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1055",
+              "name": "estado",
+              "visibility": "private",
+              "type": "EstadoCelda"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1056",
+              "name": "observaciones",
+              "visibility": "private",
+              "type": "String"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1057",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1058",
+          "name": "Registro",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1059",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1060",
+              "name": "vehiculo",
+              "visibility": "private",
+              "type": "Vehiculo"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1061",
+              "name": "celda",
+              "visibility": "private",
+              "type": "Celda"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1062",
+              "name": "usuarioEntrada",
+              "visibility": "private",
+              "type": "Usuario"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1063",
+              "name": "usuarioSalida",
+              "visibility": "private",
+              "type": "Usuario"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1064",
+              "name": "fechaHoraEntrada",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1065",
+              "name": "fechaHoraSalida",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1066",
+              "name": "estado",
+              "visibility": "private",
+              "type": "EstadoRegistro"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1067",
+              "name": "observaciones",
+              "visibility": "private",
+              "type": "String"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1068",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1069",
+          "name": "Comprobante",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1070",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1071",
+              "name": "registro",
+              "visibility": "private",
+              "type": "Registro"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1072",
+              "name": "codigo",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1073",
+              "name": "tipo",
+              "visibility": "private",
+              "type": "TipoComprobante"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1074",
+              "name": "fechaGeneracion",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1075",
+              "name": "qrBase64",
+              "visibility": "private",
+              "type": "String"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1076",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1077",
+          "name": "Novedad",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1078",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1079",
+              "name": "registro",
+              "visibility": "private",
+              "type": "Registro"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1080",
+              "name": "tipo",
+              "visibility": "private",
+              "type": "TipoNovedad"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1081",
+              "name": "descripcion",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1082",
+              "name": "fechaHora",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1083",
+              "name": "reportadoPor",
+              "visibility": "private",
+              "type": "Usuario"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1084",
+              "name": "evidenciaUrl",
+              "visibility": "private",
+              "type": "String"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1085",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "CLS_1086",
+          "name": "AuditoriaLog",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1087",
+              "name": "id",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1088",
+              "name": "usuario",
+              "visibility": "private",
+              "type": "Usuario"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1089",
+              "name": "operacion",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1090",
+              "name": "entidadAfectada",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1091",
+              "name": "registroId",
+              "visibility": "private",
+              "type": "Long"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1092",
+              "name": "ipOrigen",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1093",
+              "name": "resultado",
+              "visibility": "private",
+              "type": "String"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1094",
+              "name": "fechaHora",
+              "visibility": "private",
+              "type": "LocalDateTime"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_1095",
+              "name": "detalle",
+              "visibility": "private",
+              "type": "String"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "OP_1096",
+              "name": "prePersist",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLPackage",
+          "_id": "PKG_1113",
+          "name": "presentation",
+          "ownedElements": [
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1114",
+              "name": "AuthController"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1115",
+              "name": "RegistroController"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1116",
+              "name": "VehiculoController"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1117",
+              "name": "CeldaController"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1118",
+              "name": "NovedadController"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1119",
+              "name": "ReporteController"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1120",
+              "name": "SecurityConfig"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1121",
+              "name": "PasswordEncoderConfig"
+            }
+          ]
+        },
+        {
+          "_type": "UMLPackage",
+          "_id": "PKG_1122",
+          "name": "domain",
+          "ownedElements": [
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1123",
+              "name": "Usuario"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1124",
+              "name": "Vehiculo"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1125",
+              "name": "Celda"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1126",
+              "name": "Registro"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1127",
+              "name": "Comprobante"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1128",
+              "name": "Novedad"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1129",
+              "name": "AuditoriaLog"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1130",
+              "name": "AuthService"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1131",
+              "name": "RegistroService"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1132",
+              "name": "CeldaService"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1133",
+              "name": "VehiculoService"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1134",
+              "name": "PicoYPlacaService"
+            }
+          ]
+        },
+        {
+          "_type": "UMLPackage",
+          "_id": "PKG_1135",
+          "name": "infrastructure",
+          "ownedElements": [
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1136",
+              "name": "UsuarioRepository"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1137",
+              "name": "VehiculoRepository"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1138",
+              "name": "CeldaRepository"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1139",
+              "name": "RegistroRepository"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1140",
+              "name": "ComprobanteRepository"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1141",
+              "name": "NovedadRepository"
+            },
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1142",
+              "name": "GlobalExceptionHandler"
+            }
+          ]
+        },
+        {
+          "_type": "UMLPackage",
+          "_id": "PKG_1143",
+          "name": "util",
+          "ownedElements": [
+            {
+              "_type": "UMLClass",
+              "_id": "PKG_CLS_1144",
+              "name": "JwtUtil"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

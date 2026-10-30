@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S20 - Evidencia de Aprendizaje 1. Diseño Sistema de Información - Iteración 1</title>
+<style>
+  @page {
+    size: letter;
+    margin: 20mm 20mm 25mm 20mm;
+    @bottom-center {
+      content: counter(page);
+      font-size: 10pt;
+      font-family: Arial, sans-serif;
+    }
+  }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1a202c;
+    line-height: 1.55;
+    font-size: 10.5pt;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+  .cover {
+    text-align: center;
+    padding-top: 60px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cover h1 {
+    font-size: 20pt;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .cover h2 {
+    font-size: 14pt;
+    color: #3b82f6;
+    font-weight: 500;
+    margin-bottom: 40px;
+  }
+  .cover-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 30px auto;
+    width: 80%;
+    text-align: left;
+    font-size: 11pt;
+  }
+  .cover-box p {
+    margin: 8px 0;
+  }
+  .cover-box strong {
+    color: #1e293b;
+    display: inline-block;
+    width: 170px;
+  }
+  .cover-footer {
+    font-size: 11pt;
+    color: #475569;
+    margin-top: 40px;
+  }
+  h2.section-title {
+    font-size: 15pt;
+    color: #1e3a8a;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 4px;
+    margin-top: 25px;
+  }
+  h3.subsection-title {
+    font-size: 12pt;
+    color: #0f172a;
+    margin-top: 18px;
+    margin-bottom: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 9pt;
+  }
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 6px 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+  pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8pt;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.35;
+  }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #f1f5f9;
+    color: #b91c1c;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 8.5pt;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 8pt;
+    font-weight: bold;
+  }
+  .badge-success { background: #dcfce7; color: #166534; }
+  .badge-primary { background: #dbeafe; color: #1e40af; }
+  .badge-warning { background: #ffedd5; color: #9a3412; }
+  .hu-card {
+    background: #f8fafc;
+    border-left: 4px solid #2563eb;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-radius: 0 6px 6px 0;
+  }
+  .mockup-box {
+    background: #ffffff;
+    border: 1px dashed #64748b;
+    font-family: 'Consolas', monospace;
+    padding: 10px;
+    font-size: 7.5pt;
+    line-height: 1.25;
+    white-space: pre;
+    color: #1e293b;
+    margin: 8px 0;
+  }
+  .alert-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin: 12px 0;
+    font-size: 9.5pt;
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div>
+    <h1>Institución Universitaria Digital de Antioquia</h1>
+    <p style="font-size: 13pt; color: #475569; margin-top: -4px;">Facultad de Ingeniería y Ciencias Aplicadas - Ingeniería de Software</p>
+    <div style="height: 30px;"></div>
+    <h2>S20 - Evidencia de Aprendizaje 1. Diseño Sistema de Información – Iteración 1</h2>
+    <p style="font-size: 14pt; font-weight: bold; color: #1e293b;">Sistema de Gestión de Parqueadero "Autos Colombia"</p>
+    <span class="badge badge-success" style="font-size: 10pt; padding: 4px 12px;">Iteración 1: Gestión de Entrada y Salida de Vehículos</span>
+  </div>
+
+  <div class="cover-box">
+    <p><strong>Estudiante:</strong> Brayan Alejandro Durango Urrea</p>
+    <p><strong>Modalidad:</strong> Trabajo individual</p>
+    <p><strong>Roles asumidos:</strong> Analista de Requerimientos, Desarrollador Backend y Desarrollador Frontend / QA</p>
+    <p><strong>Profesor:</strong> Esteban Montoya Molina</p>
+    <p><strong>Grupo / Aula:</strong> PREICA2602B020081</p>
+    <p><strong>Asignatura:</strong> Ingeniería de Software</p>
+    <p><strong>Repositorio GitHub:</strong> https://github.com/brayandurango-lgtm/Ingenieria-1-disenio-del-sistema.git</p>
+  </div>
+
+  <div class="cover-footer">
+    <p><strong>Medellín, Antioquia, Colombia</strong><br>Octubre de 2026</p>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- TABLA DE CONTENIDO -->
+<h2 class="section-title">Tabla de Contenido</h2>
+<ol style="font-size: 10pt; line-height: 1.8;">
+  <li><strong>Introducción al Proyecto</strong></li>
+  <li><strong>Entregable 1: Requerimientos Funcionales y No Funcionales</strong></li>
+  <li><strong>Entregable 2: Historias de Usuario Asociadas</strong></li>
+  <li><strong>Entregable 3: Arquitectura del Sistema de la Aplicación (StarUML / C4)</strong></li>
+  <li><strong>Entregable 4: Mockups de las Historias de Usuario (Figma / UI)</strong></li>
+  <li><strong>Entregable 5: Modelo Entidad-Relación (MER), Modelo Relacional (MR) y Modelo Físico (MF)</strong></li>
+  <li><strong>Entregable 6: Diagramas de Casos de Uso (StarUML)</strong></li>
+  <li><strong>Entregable 7: Diagrama de Clases del Dominio (StarUML)</strong></li>
+  <li><strong>Entregable 8: Diagrama de Paquetes Arquitectónicos (StarUML)</strong></li>
+  <li><strong>Entregable 9: Código Fuente, Pruebas Automatizadas y Repositorio GitHub</strong></li>
+  <li><strong>Conclusiones de Ingeniería de Software</strong></li>
+  <li><strong>Referencias Bibliográficas</strong></li>
+</ol>
+
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
+
+<!-- INTRODUCCIÓN -->
+<h2 class="section-title">1. Introducción al Proyecto</h2>
+<p>
+El parqueadero comercial <strong>"Autos Colombia"</strong> presta servicios de estacionamiento por mensualidad y rotación vehicular en el territorio nacional. Ante el crecimiento de su volumen operacional, surge la necesidad apremiante de implementar un sistema de información moderno, seguro y transaccional que automatice sus operaciones diarias: control de accesos, celdas de estacionamiento, asignación por tipo de vehículo, reporte de anomalías (novedades) y auditoría rigurosa de cada evento.
+</p>
+<p>
+En el marco de la asignatura <strong>Ingeniería de Software</strong> de la <strong>IU Digital de Antioquia</strong>, se desarrolla la <strong>Iteración 1</strong> enfocada de manera prioritaria en el flujo crítico del negocio: <strong>Gestión de la Entrada y Salida de Vehículos</strong>.
+</p>
+<p>
+Este informe documenta el trabajo individual de <strong>Brayan Alejandro Durango Urrea</strong> en los roles de Analista de Requerimientos, Desarrollador Backend y Desarrollador Frontend / QA. Reúne requerimientos e historias de usuario, arquitectura y modelos de datos, una interfaz web servida por Spring Boot y una suite de pruebas. Los wireframes de este repositorio son especificaciones textuales: todavía no existe un prototipo real ni un enlace de Figma. El proyecto StarUML contiene elementos de modelo y diagramas declarados, pero requiere completar y validar sus vistas gráficas en StarUML antes de presentarlo como evidencia visual final.
+</p>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLE 1 -->
+<h2 class="section-title">2. Entregable 1: Requerimientos Funcionales y No Funcionales</h2>
+
+<h3 class="subsection-title">2.1 Requerimientos Funcionales (RF) – Entrada y Salida</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 10%;">ID</th>
+      <th style="width: 25%;">Nombre</th>
+      <th style="width: 45%;">Descripción</th>
+      <th style="width: 20%;">Regla de Negocio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>RF-01</strong></td>
+      <td>Autenticación JWT</td>
+      <td>Control de acceso seguro para operadores y administradores mediante credenciales y tokens JWT.</td>
+      <td>Bloqueo tras 3 intentos por 15 min. Token expira a las 8h.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-02</strong></td>
+      <td>Registro Entrada</td>
+      <td>Captura de placa, tipo de vehículo, marca, modelo, color y datos del titular.</td>
+      <td>Placa con formato colombiano. Registro en estado ACTIVO.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-03</strong></td>
+      <td>Validación Pico y Placa</td>
+      <td>Verificación automática de restricción vehicular distrital (Bogotá D.C.) según día y último dígito.</td>
+      <td>Lunes (6,9), Martes (0,1), Miércoles (2,3), Jueves (4,5), Viernes (7,8).</td>
+    </tr>
+    <tr>
+      <td><strong>RF-04</strong></td>
+      <td>Asignación Celda</td>
+      <td>Búsqueda y asignación de la primera celda libre por categoría (CARRO, MOTO, CAMIONETA).</td>
+      <td>Celda pasa a OCUPADA transaccionalmente. Control de sobrecupo.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-05</strong></td>
+      <td>Comprobante Entrada QR</td>
+      <td>Emisión de ticket con código alfanumérico único e imagen QR codificada en Base64.</td>
+      <td>Generado con librería ZXing con datos de placa y celda.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-06</strong></td>
+      <td>Registro Salida</td>
+      <td>Búsqueda por placa activa, liquidación de minutos de estancia y cierre de servicio.</td>
+      <td>Registro pasa a CERRADO con timestamp de salida.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-07</strong></td>
+      <td>Liberación Celda</td>
+      <td>Cambio automático de estado de la celda de parqueo al confirmar la salida del automotor.</td>
+      <td>Celda pasa inmediatamente a DISPONIBLE.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-08</strong></td>
+      <td>Comprobante Salida QR</td>
+      <td>Emisión de ticket de salida con código QR y cálculo de permanencia.</td>
+      <td>Persistido en base de datos para trazabilidad.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-09</strong></td>
+      <td>Consulta Vehículos</td>
+      <td>Búsqueda de vehículos por placa, propietario o tipología vehicular.</td>
+      <td>Consultas JPQL optimizadas con índices B-Tree.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-10</strong></td>
+      <td>Registro Novedades</td>
+      <td>Reporte de anomalías mecánicas, rayones previos o contingencias en estancia.</td>
+      <td>Tipología estandarizada y URL de soporte fotográfico.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-11</strong></td>
+      <td>Cancelación Registro</td>
+      <td>Anulación de un registro activo erróneo con liberación inmediata de la celda.</td>
+      <td>Registro pasa a CANCELADO con motivo auditado.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-12</strong></td>
+      <td>Dashboard Ocupación</td>
+      <td>Consolidación en tiempo real de celdas libres, ocupadas y porcentaje general y por piso.</td>
+      <td>Cálculo dinámico en memoria y base de datos.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-13</strong></td>
+      <td>Reporte CSV</td>
+      <td>Exportación de datos operacionales de estancias en formato de texto plano CSV.</td>
+      <td>Exclusivo para rol ADMINISTRADOR.</td>
+    </tr>
+    <tr>
+      <td><strong>RF-14</strong></td>
+      <td>Auditoría Transversal</td>
+      <td>Registro inmutable de cada transacción sensible con IP de origen, usuario y estado.</td>
+      <td>Almacenado en tabla <code>auditoria_log</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="subsection-title">2.2 Requerimientos No Funcionales (RNF)</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 12%;">Código</th>
+      <th style="width: 20%;">Categoría</th>
+      <th style="width: 40%;">Requerimiento No Funcional</th>
+      <th style="width: 28%;">Métrica / Estándar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>RNF-01</strong></td><td>Seguridad</td><td>Cifrado criptográfico de contraseñas de usuarios.</td><td>Algoritmo BCrypt (costo 10).</td></tr>
+    <tr><td><strong>RNF-02</strong></td><td>Seguridad</td><td>Autenticación sin estado (stateless).</td><td>Tokens JWT (HMAC-SHA256, 8h).</td></tr>
+    <tr><td><strong>RNF-03</strong></td><td>Seguridad</td><td>Control de acceso basado en roles (RBAC).</td><td>Roles ADMINISTRADOR y OPERADOR.</td></tr>
+    <tr><td><strong>RNF-04</strong></td><td>Rendimiento</td><td>Tiempo de respuesta en operaciones transaccionales.</td><td>$P_{95} < 500$ ms.</td></tr>
+    <tr><td><strong>RNF-05</strong></td><td>Concurrencia</td><td>Manejo atómico de transacciones de celdas.</td><td>Transacciones ACID con HikariCP.</td></tr>
+    <tr><td><strong>RNF-06</strong></td><td>Disponibilidad</td><td>Persistencia relacional confiable.</td><td>PostgreSQL y volumen Docker persistente.</td></tr>
+    <tr><td><strong>RNF-07</strong></td><td>Mantenibilidad</td><td>Arquitectura modular en 4 capas.</td><td>Principios SOLID y Clean Code.</td></tr>
+    <tr><td><strong>RNF-08</strong></td><td>Portabilidad</td><td>Despliegue multi-plataforma en contenedores.</td><td>Docker y Docker Compose.</td></tr>
+    <tr><td><strong>RNF-09</strong></td><td>Calidad</td><td>Cobertura de pruebas automatizadas.</td><td>Meta mínima ≥ 70%; la última cobertura JaCoCo medida alcanza 90,2% de líneas.</td></tr>
+    <tr><td><strong>RNF-10</strong></td><td>Usabilidad</td><td>Agilidad de atención en garita de entrada.</td><td>Operación completable en $< 10$ s.</td></tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLE 2 -->
+<h2 class="section-title">3. Entregable 2: Historias de Usuario Asociadas</h2>
+
+<div class="hu-card">
+  <strong>HU-01: Autenticación de Operador y Administrador</strong> (Asociada a RF-01 | Prioridad: Alta)<br>
+  <em>Como:</em> Operador o Administrador del parqueadero | <em>Quiero:</em> Iniciar sesión con mi correo corporativo y contraseña | <em>Para:</em> Acceder de forma segura a mis funciones autorizadas en garita.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> un usuario registrado activo con clave válida, <em>cuando</em> envía sus credenciales, <em>entonces</em> el sistema expide un token JWT y autoriza el acceso.<br>
+  • <em>Dado</em> 3 intentos fallidos seguidos, <em>cuando</em> se intenta un cuarto login, <em>entonces</em> la cuenta se bloquea por 15 minutos.
+</div>
+
+<div class="hu-card">
+  <strong>HU-02: Registro de Entrada Vehicular y Asignación de Celda</strong> (Asociada a RF-02, RF-04 | Prioridad: Alta)<br>
+  <em>Como:</em> Operador de garita | <em>Quiero:</em> Capturar la placa y características del automotor | <em>Para:</em> Autorizar su entrada y asignarle automáticamente una celda libre.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> un vehículo sin estancia previa activa, <em>cuando</em> se ingresa la placa, <em>entonces</em> se asigna la primera celda libre de su tipología y se marca como OCUPADA.<br>
+  • <em>Dado</em> un vehículo que ya se encuentra adentro, <em>cuando</em> se digita su placa, <em>entonces</em> el sistema rechaza la operación con código 409 Conflict.
+</div>
+
+<div class="hu-card">
+  <strong>HU-03: Validación de Pico y Placa Distrital</strong> (Asociada a RF-03 | Prioridad: Media-Alta)<br>
+  <em>Como:</em> Operador de parqueadero | <em>Quiero:</em> Que el sistema verifique si la placa tiene restricción de circulación | <em>Para:</em> Advertir al conductor sobre la normativa legal vigente.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> un día hábil y una placa con restricción, <em>cuando</em> se valida en entrada, <em>entonces</em> el sistema genera una alerta visual al operador.<br>
+  • <em>Dado</em> un día sábado o festivo, <em>cuando</em> ingresa el vehículo, <em>entonces</em> el sistema indica que no aplica restricción.
+</div>
+
+<div class="hu-card">
+  <strong>HU-04: Emisión de Comprobante con Código QR</strong> (Asociada a RF-05, RF-08 | Prioridad: Alta)<br>
+  <em>Como:</em> Conductor / Cliente | <em>Quiero:</em> Recibir un comprobante impreso o digital con código QR | <em>Para:</em> Tener constancia de mi recepción y agilizar mi salida.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> un registro exitoso, <em>cuando</em> se guarda la transacción, <em>entonces</em> el sistema genera el código de ticket y el QR en Base64 escaneable por lectores ópticos.
+</div>
+
+<div class="hu-card">
+  <strong>HU-05: Registro de Salida y Liberación de Celda</strong> (Asociada a RF-06, RF-07 | Prioridad: Alta)<br>
+  <em>Como:</em> Operador de garita | <em>Quiero:</em> Buscar la placa activa del vehículo que egresa | <em>Para:</em> Registrar su salida, calcular el tiempo y liberar la celda para otro usuario.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> un registro activo, <em>cuando</em> se confirma la salida, <em>entonces</em> pasa a CERRADO, la celda pasa a DISPONIBLE y se calcula la duración exacta.<br>
+  • <em>Dado</em> un vehículo sin registro activo, <em>cuando</em> se busca su placa, <em>entonces</em> el sistema retorna error 404 Not Found.
+</div>
+
+<div class="hu-card">
+  <strong>HU-06: Gestión de Novedades e Incidentes</strong> (Asociada a RF-10 | Prioridad: Media)<br>
+  <em>Como:</em> Operador en turno | <em>Quiero:</em> Reportar rayones, golpes o fallas mecánicas detectadas en un automotor | <em>Para:</em> Respaldar legalmente al parqueadero con evidencia.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> un vehículo en estancia, <em>cuando</em> se detecta una anomalía, <em>entonces</em> se guarda el tipo de novedad, descripción y URL de evidencia fotográfica.
+</div>
+
+<div class="hu-card">
+  <strong>HU-07: Monitoreo en Dashboard Operativo</strong> (Asociada a RF-12 | Prioridad: Media)<br>
+  <em>Como:</em> Administrador | <em>Quiero:</em> Consultar indicadores de ocupación en tiempo real | <em>Para:</em> Conocer la disponibilidad de celdas por piso y tipo vehicular.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> el acceso al sistema, <em>cuando</em> se carga la vista de inicio, <em>entonces</em> se grafican las celdas disponibles y el porcentaje de ocupación global.
+</div>
+
+<div class="hu-card">
+  <strong>HU-08: Exportación de Reportes en Formato CSV</strong> (Asociada a RF-13 | Prioridad: Media)<br>
+  <em>Como:</em> Administrador | <em>Quiero:</em> Descargar el archivo CSV de ocupación y estancias | <em>Para:</em> Realizar conciliaciones y auditorías contables en Microsoft Excel.<br>
+  <strong>Criterios de Aceptación:</strong><br>
+  • <em>Dado</em> el rol ADMINISTRADOR, <em>cuando</em> ejecuta la descarga, <em>entonces</em> se genera un archivo CSV plano con cabeceras estándar UTF-8.
+</div>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLE 3 -->
+<h2 class="section-title">4. Entregable 3: Arquitectura del Sistema (StarUML y C4)</h2>
+<p>
+El sistema implementa una <strong>Arquitectura en Capas Desacopladas (Layered Architecture)</strong> con orientación a servicios REST sin estado (Stateless REST API), permitiendo alta mantenibilidad y desacoplamiento.
+</p>
+
+<div class="alert-box">
+  <strong>Archivo Nativo de StarUML Generado:</strong><br>
+  El proyecto StarUML completo con todos los paquetes, clases, actores, casos de uso y diagramas de componentes se encuentra disponible en: <code>docs/staruml/AutosColombia_Iteracion1.mdj</code>.
+</div>
+
+<h3 class="subsection-title">4.1 Capas Arquitectónicas del Sistema</h3>
+<pre>
+┌────────────────────────────────────────────────────────────────────────┐
+│ 1. CAPA DE PRESENTACIÓN (REST Controllers / DTOs / Security Config)    │
+│    - AuthController, RegistroController, VehiculoController, Celda... │
+│    - DTOs con Bean Validation (jakarta.validation)                    │
+│    - GlobalExceptionHandler (@RestControllerAdvice)                    │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Inyección de Dependencias
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ 2. CAPA DE DOMINIO Y SERVICIOS (Business & Domain Logic Layer)         │
+│    - Entidades de Negocio (Usuario, Vehiculo, Celda, Registro...)     │
+│    - Servicios transaccionales (@Service @Transactional)               │
+│    - Reglas de negocio desacopladas (Pico y Placa, Celdas, QR)         │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Inversión de Control
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ 3. CAPA DE INFRAESTRUCTURA Y ACCESO A DATOS (Spring Data JPA)          │
+│    - Repositorios JPA (UsuarioRepository, RegistroRepository...)       │
+│    - Migraciones de esquema automatizadas con Flyway                   │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Pool HikariCP (JDBC)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ 4. CAPA DE PERSISTENCIA (PostgreSQL - base Garajeautomovil)            │
+└────────────────────────────────────────────────────────────────────────┘
+</pre>
+
+<h3 class="subsection-title">4.2 Decisiones de Arquitectura (ADRs)</h3>
+<ul>
+  <li><strong>ADR-01:</strong> Uso de Spring Boot 3.2.5 con Java 17 LTS por estabilidad, soporte y seguridad con Jakarta EE 10.</li>
+  <li><strong>ADR-02:</strong> Base de datos relacional PostgreSQL para garantizar transacciones ACID en celdas de parqueo.</li>
+  <li><strong>ADR-03:</strong> Desacoplamiento de <code>PasswordEncoderConfig</code> para eliminar dependencias circulares en Spring Security.</li>
+  <li><strong>ADR-04:</strong> Asignación automática de celdas por tipo de vehículo mediante ordenamiento natural $O(1)$ de celdas disponibles.</li>
+  <li><strong>ADR-05:</strong> Encapsulamiento de la regla de Pico y Placa en <code>PicoYPlacaService</code> para fácil actualización normativa.</li>
+  <li><strong>ADR-06:</strong> Generación de comprobantes QR con Google ZXing codificados en Base64 para visualización directa en web/móvil.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLE 4 -->
+<h2 class="section-title">5. Entregable 4: Wireframes y frontend web</h2>
+<p>
+Se implementó un frontend web adaptable en <code>src/main/resources/static/</code> y se documentaron wireframes. Los diagramas de arquitectura, casos de uso, clases y paquetes se encuentran en <a href="08_ENTREGABLES_VISUALES.md">08_ENTREGABLES_VISUALES.md</a> como Mermaid, renderizable en GitHub. Estos entregables no son un prototipo creado en Figma ni una exportación desde StarUML. El archivo Figma auténtico continúa pendiente.
+</p>
+
+<h3 class="subsection-title">Mockup 1: Pantalla de Autenticación / Login (HU-01)</h3>
+<div class="mockup-box">
+┌────────────────────────────────────────────────────────────────────────┐
+│                        AUTOS COLOMBIA S.A.S.                           │
+│                   Control de Parqueadero - v1.0                        │
+├────────────────────────────────────────────────────────────────────────┤
+│                      ┌────────────────────────┐                        │
+│                      │     INICIAR SESIÓN     │                        │
+│                      │ Correo Electrónico:    │                        │
+│                      │ [ operador@autos.com ] │                        │
+│                      │ Contraseña:            │                        │
+│                      │ [ **********         ] │                        │
+│                      │  [   INGRESAR AL S.I.  ]                        │
+│                      │ Máx. 3 intentos seguidos│                       │
+│                      └────────────────────────┘                        │
+└────────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h3 class="subsection-title">Mockup 2: Dashboard General de Celdas y Ocupación (HU-07)</h3>
+<div class="mockup-box">
+┌────────────────────────────────────────────────────────────────────────┐
+│ AUTOS COLOMBIA  |  Dashboard   [+ Entrada]   [- Salida]   [Operador ▼] │
+├────────────────────────────────────────────────────────────────────────┤
+│ ┌────────────────┐ ┌────────────────┐ ┌────────────────┐ ┌───────────┐ │
+│ │  TOTAL CELDAS  │ │ DISPONIBLES    │ │ OCUPADAS       │ │ OCUPACIÓN │ │
+│ │      16        │ │      12        │ │       4        │ │   25.0%   │ │
+│ └────────────────┘ └────────────────┘ └────────────────┘ └───────────┘ │
+│                                                                        │
+│  DISPONIBILIDAD POR TIPO:                                              │
+│  • CARROS:      [ 6 Libres /  8 Celdas ]   [======----] 25% Ocupado    │
+│  • MOTOS:       [ 3 Libres /  4 Celdas ]   [===-------] 25% Ocupado    │
+│  • CAMIONETAS:  [ 3 Libres /  4 Celdas ]   [===-------] 25% Ocupado    │
+└────────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h3 class="subsection-title">Mockup 3: Módulo de Registro de Entrada y Pico y Placa (HU-02, HU-03)</h3>
+<div class="mockup-box">
+┌────────────────────────────────────────────────────────────────────────┐
+│ AUTOS COLOMBIA  |  Registro de Entrada Vehicular                       │
+├────────────────────────────────────────────────────────────────────────┤
+│  Placa:              [ ABC123    ]   Tipo: (•) Carro  ( ) Moto  ( ) Cam│
+│  Marca:              [ Chevrolet           ]   Modelo: [ Onix Sedan  ] │
+│  Color:              [ Gris Platino        ]                           │
+│ ┌────────────────────────────────────────────────────────────────────┐ │
+│ │ [✓] SIN RESTRICCIÓN DE PICO Y PLACA PARA EL DÍA DE HOY (BOGOTÁ)    │ │
+│ └────────────────────────────────────────────────────────────────────┘ │
+│  Celda Asignada:     [ A-02 - Piso 1 (DISPONIBLE) ]                    │
+│            [ CANCELAR ]           [ REGISTRAR E IMPRIMIR TICKET QR ]   │
+└────────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h3 class="subsection-title">Mockup 4: Módulo de Registro de Salida y Liquidación (HU-05)</h3>
+<div class="mockup-box">
+┌────────────────────────────────────────────────────────────────────────┐
+│ AUTOS COLOMBIA  |  Registro de Salida Vehicular                        │
+├────────────────────────────────────────────────────────────────────────┤
+│  Buscar Placa: [ ABC123       ]   [ BUSCAR REGISTRO ACTIVO ]           │
+│ ┌────────────────────────────────────────────────────────────────────┐ │
+│ │ Placa:           ABC-123             Celda Ocupada:   A-01 (Piso 1)│
+│ │ Hora Entrada:    17/10/2026 14:00    Hora Actual:     16:45        │ │
+│ │ Tiempo Estancia: 2 horas y 45 minutos (165 minutos)                │ │
+│ └────────────────────────────────────────────────────────────────────┘ │
+│    [ VOLVER AL DASHBOARD ]       [ CONFIRMAR SALIDA Y LIBERAR CELDA ]  │
+└────────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h3 class="subsection-title">Mockup 5: Comprobante Térmico con Código QR (HU-04)</h3>
+<div class="mockup-box">
+┌────────────────────────────────────────────────────┐
+│              AUTOS COLOMBIA S.A.S.                 │
+│              NIT: 900.854.120-1                    │
+│          Medellín, Antioquia, Colombia             │
+├────────────────────────────────────────────────────┤
+│           COMPROBANTE DE ENTRADA                   │
+│ Ticket Nº: TKT-ENT-20261017-0042                   │
+│ Fecha / Hora: 17/10/2026 14:32:10                  │
+│ Placa: ABC-123  |  Tipo: CARRO  |  Celda: A-01     │
+│                                                    │
+│               ██████████  ██  ██████████           │
+│               ██      ██  ██  ██      ██           │
+│               ██  ██  ██  ██  ██  ██  ██           │
+│               ██████████  ██  ██████████           │
+│             Escanee para validar ticket            │
+└────────────────────────────────────────────────────┘
+</div>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLE 5 -->
+<h2 class="section-title">6. Entregable 5: Modelo Entidad-Relación (MER), Modelo Relacional (MR) y Modelo Físico (MF)</h2>
+
+<h3 class="subsection-title">6.1 Modelo Entidad-Relación Conceptual (MER)</h3>
+<p>
+El MER define 7 entidades esenciales: <code>USUARIO</code>, <code>VEHICULO</code>, <code>CELDA</code>, <code>REGISTRO</code>, <code>COMPROBANTE</code>, <code>NOVEDAD</code> y <code>AUDITORIA_LOG</code>, modelando las cardinalidades del negocio descritas en la sección técnica.
+</p>
+
+<h3 class="subsection-title">6.2 Modelo Relacional Lógico (MR) Normalizado en 3FN</h3>
+<p>Esquema formal de relaciones en Tercera Forma Normal (3FN):</p>
+<ul style="font-family: 'Consolas', monospace; font-size: 8.5pt; line-height: 1.8;">
+  <li><strong>USUARIO</strong> (<u>id</u>, nombre, apellido, documento [UK], correo [UK], telefono, clave_hash, tipo, activo, fecha_registro)</li>
+  <li><strong>VEHICULO</strong> (<u>id</u>, placa [UK], marca, modelo, color, tipo, propietario_documento, propietario_nombre, propietario_telefono, fecha_registro)</li>
+  <li><strong>CELDA</strong> (<u>id</u>, numero [UK], piso, tipo_vehiculo, estado, observaciones)</li>
+  <li><strong>REGISTRO</strong> (<u>id</u>, <em>vehiculo_id</em>, <em>celda_id</em>, <em>usuario_entrada_id</em>, <em>usuario_salida_id</em>, fecha_hora_entrada, fecha_hora_salida, estado, observaciones)</li>
+  <li><strong>COMPROBANTE</strong> (<u>id</u>, <em>registro_id</em>, codigo [UK], tipo, fecha_generacion, qr_base64)</li>
+  <li><strong>NOVEDAD</strong> (<u>id</u>, <em>registro_id</em>, tipo, descripcion, fecha_hora, <em>reportado_por_id</em>, evidencia_url)</li>
+  <li><strong>AUDITORIA_LOG</strong> (<u>id</u>, <em>usuario_id</em>, operacion, entidad_afectada, registro_id, ip_origen, resultado, fecha_hora, detalle)</li>
+</ul>
+
+<h3 class="subsection-title">6.3 Modelo Físico (MF) – Script DDL de Base de Datos</h3>
+<pre>
+CREATE TABLE usuario (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(80) NOT NULL,
+    apellido VARCHAR(80) NOT NULL,
+    documento VARCHAR(20) NOT NULL,
+    correo VARCHAR(120) NOT NULL,
+    telefono VARCHAR(20) NULL,
+    clave_hash VARCHAR(255) NOT NULL,
+    tipo ENUM('ADMINISTRADOR','OPERADOR') NOT NULL DEFAULT 'OPERADOR',
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_usuario PRIMARY KEY (id),
+    CONSTRAINT uk_usuario_documento UNIQUE (documento),
+    CONSTRAINT uk_usuario_correo UNIQUE (correo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE vehiculo (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    placa VARCHAR(10) NOT NULL,
+    marca VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    color VARCHAR(30) NOT NULL,
+    tipo ENUM('CARRO','MOTO','CAMIONETA') NOT NULL DEFAULT 'CARRO',
+    propietario_documento VARCHAR(20) NULL,
+    propietario_nombre VARCHAR(120) NULL,
+    propietario_telefono VARCHAR(20) NULL,
+    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_vehiculo PRIMARY KEY (id),
+    CONSTRAINT uk_vehiculo_placa UNIQUE (placa)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE celda (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    numero VARCHAR(10) NOT NULL,
+    piso INT NOT NULL,
+    tipo_vehiculo ENUM('CARRO','MOTO','CAMIONETA') NOT NULL DEFAULT 'CARRO',
+    estado ENUM('DISPONIBLE','OCUPADA','MANTENIMIENTO') NOT NULL DEFAULT 'DISPONIBLE',
+    observaciones VARCHAR(255) NULL,
+    CONSTRAINT pk_celda PRIMARY KEY (id),
+    CONSTRAINT uk_celda_numero UNIQUE (numero)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE registro (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    vehiculo_id BIGINT NOT NULL,
+    celda_id BIGINT NOT NULL,
+    usuario_entrada_id BIGINT NOT NULL,
+    usuario_salida_id BIGINT NULL,
+    fecha_hora_entrada DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_hora_salida DATETIME NULL,
+    estado ENUM('ACTIVO','CERRADO','CANCELADO') NOT NULL DEFAULT 'ACTIVO',
+    observaciones TEXT NULL,
+    CONSTRAINT pk_registro PRIMARY KEY (id),
+    CONSTRAINT fk_registro_vehiculo FOREIGN KEY (vehiculo_id) REFERENCES vehiculo (id),
+    CONSTRAINT fk_registro_celda FOREIGN KEY (celda_id) REFERENCES celda (id),
+    CONSTRAINT fk_registro_usuario_entrada FOREIGN KEY (usuario_entrada_id) REFERENCES usuario (id),
+    CONSTRAINT fk_registro_usuario_salida FOREIGN KEY (usuario_salida_id) REFERENCES usuario (id),
+    CONSTRAINT chk_registro_salida CHECK (estado = 'ACTIVO' OR fecha_hora_salida IS NOT NULL)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+</pre>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLES 6, 7, 8 -->
+<h2 class="section-title">7. Entregables 6, 7 y 8: Modelado UML en StarUML</h2>
+
+<h3 class="subsection-title">7.1 Entregable 6: Diagrama de Casos de Uso (StarUML)</h3>
+<p>
+Modelado en el archivo <code>docs/staruml/AutosColombia_Iteracion1.mdj</code> (Diagrama: <em>Diagrama de Casos de Uso - Autos Colombia Iteracion 1</em>).
+</p>
+<pre>
+                                     ┌────────────────────────────────────────────────────────┐
+                                     │ SISTEMA DE PARQUEADERO AUTOS COLOMBIA - ITERACIÓN 1    │
+                                     │                                                        │
+┌─────────────────────────┐          │   (CU-01: Iniciar Sesión JWT)                          │
+│                         │─────────▶│                                                        │
+│  OPERADOR DE GARRITA    │          │   (CU-02: Registrar Entrada) ──<<include>>──▶ (CU-03)  │
+│  [Actor]                │─────────▶│       │                       Validar Pico y Placa     │
+│                         │          │       ├──<<include>>──▶ (CU-04: Asignar Celda)         │
+│                         │          │       └──<<include>>──▶ (CU-05: Emitir Comprobante QR) │
+│                         │          │                                                        │
+│                         │─────────▶│   (CU-06: Registrar Salida) ──<<include>>──▶ (CU-07)   │
+│                         │          │       │                       Liberar Celda            │
+│                         │          │       └──<<include>>──▶ (CU-05: Emitir Comprobante QR) │
+│                         │          │                                                        │
+│                         │─────────▶│   (CU-08: Registrar Novedad / Incidente)               │
+│                         │─────────▶│   (CU-09: Cancelar Registro Activo)                    │
+│                         │─────────▶│   (CU-10: Consultar Celdas y Vehículos)                │
+└─────────────────────────┘          │                                                        │
+                                     │                                                        │
+┌─────────────────────────┐          │   (CU-11: Visualizar Dashboard de Ocupación)           │
+│  ADMINISTRADOR DEL      │─────────▶│   (CU-12: Exportar Reporte de Ocupación CSV)           │
+│  SISTEMA [Actor]        │─────────▶│   (CU-13: Auditar Operaciones Críticas)                │
+└─────────────────────────┘          └────────────────────────────────────────────────────────┘
+</pre>
+
+<h3 class="subsection-title">7.2 Entregable 7: Diagrama de Clases del Dominio (StarUML)</h3>
+<p>
+Modelado en StarUML con todas las entidades JPA, atributos tipados, modificadores de visibilidad, métodos de ciclo de vida y enumeraciones.
+</p>
+<pre>
+┌─────────────────────────────────┐           ┌─────────────────────────────────┐
+│           Usuario               │           │            Vehiculo             │
+├─────────────────────────────────┤           ├─────────────────────────────────┤
+│ - id: Long                      │           │ - id: Long                      │
+│ - nombre: String                │           │ - placa: String                 │
+│ - correo: String                │           │ - marca: String                 │
+│ - claveHash: String             │           │ - modelo: String                │
+│ - tipo: TipoUsuario             │           │ - tipo: TipoVehiculo            │
+├─────────────────────────────────┤           ├─────────────────────────────────┤
+│ + prePersist(): void            │           │ + prePersist(): void            │
+└────────────────┬────────────────┘           └────────────────┬────────────────┘
+                 │ 1                                           │ 1
+                 │ registra entrada/salida                     │ estaciona
+                 ▼ 0..*                                        ▼ 0..*
+┌───────────────────────────────────────────────────────────────────────────────┐
+│                                   Registro                                    │
+├───────────────────────────────────────────────────────────────────────────────┤
+│ - id: Long                                                                    │
+│ - vehiculo: Vehiculo                                                          │
+│ - celda: Celda                                                                │
+│ - usuarioEntrada: Usuario                                                     │
+│ - usuarioSalida: Usuario                                                      │
+│ - fechaHoraEntrada: LocalDateTime                                             │
+│ - fechaHoraSalida: LocalDateTime                                              │
+│ - estado: EstadoRegistro                                                      │
+├───────────────────────────────────────────────────────────────────────────────┤
+│ + prePersist(): void                                                          │
+└───────────────┬───────────────────────────────────────────────┬───────────────┘
+                │ 1                                             │ 1
+                │ genera                                        │ presenta
+                ▼ 1..2                                          ▼ 0..*
+┌─────────────────────────────────┐           ┌─────────────────────────────────┐
+│          Comprobante            │           │             Novedad             │
+├─────────────────────────────────┤           ├─────────────────────────────────┤
+│ - id: Long                      │           │ - id: Long                      │
+│ - codigo: String                │           │ - tipo: TipoNovedad             │
+│ - tipo: TipoComprobante         │           │ - descripcion: String           │
+│ - qrBase64: String              │           │ - evidenciaUrl: String          │
+└─────────────────────────────────┘           └─────────────────────────────────┘
+</pre>
+
+<h3 class="subsection-title">7.3 Entregable 8: Diagrama de Paquetes Arquitectónicos (StarUML)</h3>
+<p>
+Organización lógica de paquetes en Java/Spring Boot modelada en StarUML:
+</p>
+<pre>
+┌──────────────────────────────────────────────────────────────┐
+│  paquete com.autoscolombia.presentation                      │
+│  - controllers: AuthController, RegistroController...        │
+│  - dto: RegistroEntradaDTO, AuthResponse, CeldaDTO...        │
+│  - config: SecurityConfig, PasswordEncoderConfig...          │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ depende de
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│  paquete com.autoscolombia.domain                            │
+│  - model: Usuario, Vehiculo, Celda, Registro, Comprobante... │
+│  - service: AuthService, RegistroService, CeldaService...    │
+│  - enums: TipoVehiculo, EstadoCelda, EstadoRegistro...       │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ implementa persistencia con
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│  paquete com.autoscolombia.infrastructure                    │
+│  - repository: UsuarioRepository, RegistroRepository...      │
+│  - exception: GlobalExceptionHandler, BusinessRuleException  │
+└──────────────────────────────────────────────────────────────┘
+</pre>
+
+<div class="page-break"></div>
+
+<!-- ENTREGABLE 9 Y CONCLUSIONES -->
+<h2 class="section-title">8. Entregable 9: Código Fuente, Pruebas y Repositorio GitHub</h2>
+
+<p>
+El código fuente se encuentra completamente implementado, probado y versionado en el repositorio oficial de GitHub del estudiante:
+</p>
+<div class="alert-box">
+  <strong>URL del Repositorio GitHub:</strong><br>
+  <a href="https://github.com/brayandurango-lgtm/Ingenieria-1-disenio-del-sistema.git" target="_blank">https://github.com/brayandurango-lgtm/Ingenieria-1-disenio-del-sistema.git</a><br>
+  <em>(Rama principal: <code>main</code>. La sincronización del commit actual debe verificarse después de publicarlo.)</em>
+</div>
+
+<h3 class="subsection-title">8.1 Certificación de Pruebas Automatizadas</h3>
+<p>
+Se ejecutó la suite completa de pruebas unitarias y de integración mediante Apache Maven y JUnit 5:
+</p>
+<pre>
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S   R E S U L T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.autoscolombia.integration.AuthControllerIntegrationTest  -> Tests: 4, Failures: 0, Errors: 0
+[INFO] Running com.autoscolombia.integration.RegistroControllerIntegrationTest-> Tests: 4, Failures: 0, Errors: 0
+[INFO] Running com.autoscolombia.service.AuthServiceTest                    -> Tests: 7, Failures: 0, Errors: 0
+[INFO] Running com.autoscolombia.service.CeldaServiceTest                   -> Tests: 9, Failures: 0, Errors: 0
+[INFO] Running com.autoscolombia.service.PicoYPlacaServiceTest              -> Tests: 15, Failures: 0, Errors: 0
+[INFO] Running com.autoscolombia.service.RegistroServiceTest                -> Tests: 10, Failures: 0, Errors: 0
+[INFO] Running com.autoscolombia.service.VehiculoServiceTest                -> Tests: 7, Failures: 0, Errors: 0
+[INFO] 
+[INFO] Results:
+[INFO] Tests run: 56, Failures: 0, Errors: 0, Skipped: 0
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS - Tests run: 136, Failures: 0, Errors: 0, Skipped: 0.
+[INFO] JaCoCo: líneas 90,2%, instrucciones 56,3%, ramas 16,0%. La meta RNF-09 de 70% de líneas queda superada.
+[INFO] ------------------------------------------------------------------------
+</pre>
+
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
+
+<h2 class="section-title">9. Conclusiones de Ingeniería de Software</h2>
+<ol style="font-size: 10pt; line-height: 1.8;">
+  <li><strong>Solidez Arquitectónica:</strong> La separación estricta en 4 capas (Presentación, Dominio, Infraestructura y Datos) garantiza que la lógica de negocio de parqueadero (Pico y Placa, celdas y QR) permanezca inmune a cambios en frameworks web o motores de bases de datos.</li>
+  <li><strong>Resolución de Deuda Técnica:</strong> El desacoplamiento temprano de la configuración criptográfica (<code>PasswordEncoderConfig</code>) y la corrección del ciclo de vida JPA con Lombok (<code>@Builder.Default</code> y <code>@PrePersist</code>) evitaron bloqueos operacionales en garita y fallos de persistencia en tiempo de ejecución.</li>
+  <li><strong>Calidad y trabajo pendiente:</strong> La suite automatizada y las pruebas de frontend pasan; la cobertura JaCoCo de líneas medida es 90,2%, superior al objetivo de 70%. Se incluyen diagramas renderizables Mermaid y un frontend visual. Falta un enlace a un archivo Figma auténtico y una exportación visual creada en StarUML para afirmar que esas dos herramientas específicas se usaron.</li>
+</ol>
+
+<hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
+
+<h2 class="section-title">10. Referencias Bibliográficas</h2>
+<ul style="font-size: 9pt; line-height: 1.6; color: #475569;">
+  <li>Pressman, R. S., & Maxim, B. R. (2020). <em>Software Engineering: A Practitioner's Approach</em> (9th ed.). McGraw-Hill Education.</li>
+  <li>Martin, R. C. (2018). <em>Clean Architecture: A Craftsman's Guide to Software Structure and Design</em>. Prentice Hall.</li>
+  <li>Fowler, M. (2002). <em>Patterns of Enterprise Application Architecture</em>. Addison-Wesley Professional.</li>
+  <li>Sommerville, I. (2016). <em>Software Engineering</em> (10th ed.). Pearson.</li>
+  <li>Institución Universitaria Digital de Antioquia. (2026). <em>Material de Estudio Unidad 1 - Ingeniería de Software</em>. IU Digital.</li>
+</ul>
+
+</body>
+</html>

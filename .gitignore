@@ -1,0 +1,87 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+logs_arranque.txt
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spring Boot
+HELP.md
+
+# Application properties with sensitive data
+application-local.yml
+application-local.properties
+.env
+.env.*
+!.env.example
+
+# Material clave / certificados
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+id_rsa
+
+# Overrides locales de Docker (suelen llevar claves reales de BD)
+docker-compose.override.yml
+
+# Volcados y respaldos de base de datos (contienen datos personales)
+# Nota: src/main/resources/db/migration/*.sql SI debe versionarse
+*.dump
+*.bak
+*.backup
+pg_dump*
+db_backup*
+backup/
+backups/
+
+# Exportaciones generadas por la aplicación (placas y nombres de propietarios)
+*.csv
+exports/
+reportes/
+
+# Node (pruebas del frontend estático)
+node_modules/
+
+# Entregable PDF: conservar localmente, no versionar
+S20_Evidencia_Aprendizaje_1_Autos_Colombia.pdf
+docs/*.pdf
+
+# Respaldos automáticos de StarUML
+*.mdj.backup
