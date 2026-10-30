@@ -10,12 +10,12 @@
 
 ## 📋 Información Académica del Proyecto
 
-* **Institución:** Institución Universitaria Digital de Antioquia (IU Digital)
+* **Institución:** Institución Universitaria Digital de Antioquia (I.U.D.A.)
 * **Asignatura:** Ingeniería de Software
-* **Actividad:** S20 - Evidencia de Aprendizaje 1. Diseño Sistema de Información – Iteración 1
+* **Actividad:** S25 - Evidencia de Aprendizaje 2. Diseño Sistema de Información – Iteración 2
 * **Grupo:** [PREICA2602B020081](https://iudigital.instructure.com/courses/28333)
 * **Profesor:** Esteban Montoya Molina
-* **Fecha de Entrega y Ubicación:** Octubre 2026, Colombia, Antioquia, Medellín
+* **Fecha de Entrega y Ubicación:** Noviembre 2026, Colombia, Antioquia, Medellín
 
 ### 👤 Modalidad individual y roles asumidos
 
