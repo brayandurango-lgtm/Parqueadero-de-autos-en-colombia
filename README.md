@@ -4,7 +4,7 @@
 [![Java](https://img.shields.io/badge/Java-17%20LTS-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue.svg)](https://www.postgresql.org/)
-[![Tests](https://img.shields.io/badge/Tests-Maven%20%2F%20JUnit-success.svg)]()
+[![CI - Verificación (Urrea)](https://github.com/brayandurango-lgtm/Parqueadero-de-autos-en-colombia/actions/workflows/ci.yml/badge.svg?branch=Urrea)](https://github.com/brayandurango-lgtm/Parqueadero-de-autos-en-colombia/actions/workflows/ci.yml?query=branch%3AUrrea)
 
 ---
 
@@ -25,6 +25,8 @@
 | **Isabella** | **Análisis funcional, diseño de interfaces y documentación** | Requerimientos, historias de usuario, casos de uso, mockups y plan de pruebas |
 
 > **Estado honesto de entregables:** el backend (Iteraciones 1 y 2) y sus pruebas están en el repositorio; los mockups son wireframes documentados en Markdown; los diagramas StarUML (`.mdj`) deben abrirse y verificarse en StarUML antes de considerarse evidencia visual completa. El PDF se conserva localmente y no se versiona.
+
+> **Cierre técnico verificado (1 de noviembre de 2026):** la rama `Urrea` contiene la Iteración 2 saneada. La ejecución local pasó 319 pruebas Java y 35 pruebas frontend; GitHub Actions pasó para el commit `9c3d819`. En PostgreSQL 18.6 local se validaron y aplicaron Flyway V1–V3 y se comprobó el flujo sintético autorizado de cliente, entrada y salida. Las filas sintéticas permanecen únicamente en la base local de verificación. No se versionan archivos de credenciales; configura secretos solo en el entorno local.
 
 ---
 
@@ -71,7 +73,7 @@ Toda la documentación técnica y de diseño elaborada para estas iteraciones se
 * 📄 **[Documento final editable en HTML](./docs/EVIDENCIA_DE_APRENDIZAJE_1_DOCUMENTO_FINAL.html):** fuente del informe; el PDF generado se conserva localmente, fuera del control de versiones.
 * 🗃️ **Esquema PostgreSQL ejecutable:** migraciones Flyway en `src/main/resources/db/migration/`.
 * 📋 **[09. Cierre Técnico - Rol de Brayan (Iteración 2)](./docs/iteracion2/09_CIERRE_TECNICO_BRAYAN.md):** documento técnico con estado de implementación, migraciones, pruebas y evidencias pendientes.
-* 🧭 **[10. Diagramas UML y de arquitectura de Iteración 2](./docs/iteracion2/10_DIAGRAMAS_UML_ITERACION2.md):** arquitectura, relaciones entre componentes, secuencias operativas y modelo de datos renderizados con Mermaid.
+* 🧭 **[10. Diagramas UML y de arquitectura de Iteración 2](./docs/iteracion2/10_DIAGRAMAS_UML_ITERACION2.md):** arquitectura, relaciones entre componentes, secuencias operativas y modelo de datos; las cinco figuras Mermaid se comprobaron renderizadas en GitHub.
 
 ---
 
@@ -338,19 +340,19 @@ Flyway se ejecuta automáticamente al iniciar la aplicación si `flyway.enabled=
 
 ---
 
-## 🗺️ Diagramas StarUML
+## 🗺️ Diagramas StarUML y Mermaid
 
-Los diagramas de secuencia y componentes de las Iteraciones 1 y 2 están disponibles en formato nativo de StarUML:
+Se conserva el proyecto nativo de StarUML y se añadieron diagramas Mermaid para consulta inmediata en GitHub:
 
-- **Iteración 1:** `docs/staruml/AutosColombia_Iteracion1.mdj` (casos de uso, clases, paquetes, despliegue)
-- **Iteraciones 1 y 2:** `docs/staruml/AutosColombia_Iteraciones1y2.mdj` (secuencia y componentes)
+- **Iteración 2, Mermaid:** [docs/iteracion2/10_DIAGRAMAS_UML_ITERACION2.md](./docs/iteracion2/10_DIAGRAMAS_UML_ITERACION2.md) (arquitectura, componentes, secuencias y modelo de datos; render comprobado en GitHub).
+- **Iteración 1, StarUML:** `docs/staruml/AutosColombia_Iteracion1.mdj`.
+- **Iteraciones 1 y 2, StarUML:** `docs/staruml/AutosColombia_Iteraciones1y2.mdj`.
 
-**Para abrir estos archivos:**
+**Estado de validación nativa:** el archivo combinado `.mdj` declara diagramas, pero sus vistas gráficas están incompletas y no se validó visualmente en StarUML. Mermaid aporta diagramas editables y renderizados, pero no se presenta como sustituto de una exportación StarUML si la rúbrica exige ese formato. Para completar esa evidencia nativa:
+
 1. Descarga e instala [StarUML](https://staruml.io/)
 2. Abre el archivo `.mdj` desde StarUML
 3. Exporta a PNG/PDF según necesites para el PDF de la actividad
-
-> **Estado de validación:** Los archivos `.mdj` han sido creados con la estructura JSON correcta de StarUML. Deben abrirse y verificarse visualmente en StarUML antes de considerarse evidencia completa.
 
 ---
 
@@ -374,7 +376,7 @@ Los diagramas de secuencia y componentes de las Iteraciones 1 y 2 están disponi
 ## 📄 Licencia y Derechos
 
 Proyecto desarrollado con fines académicos en la **Institución Universitaria Digital de Antioquia (IU Digital)** como parte del programa de Ingeniería de Software (Semestre 6).
-**Medellín, Antioquia, Colombia - Octubre 2026.**
+**Medellín, Antioquia, Colombia - Noviembre 2026.**
 
 ---
 
