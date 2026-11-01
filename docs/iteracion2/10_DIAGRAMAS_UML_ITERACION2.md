@@ -7,7 +7,7 @@ Estos diagramas describen la arquitectura y los flujos comprobados en el código
 
 ## 1. Arquitectura de aplicación
 
-<!-- mermaid-checked: no \n, no em-dash/en-dash, no {} in labels, subgraphs are id["label"], arrows are -->|"label"|, all subgraphs closed by end, ids unique -->
+<!-- mermaid-checked: labels contain no line breaks or braces; subgraph IDs are valid; arrow labels are quoted; subgraphs are closed; node IDs are unique -->
 ```mermaid
 flowchart TD
     subgraph Usuarios["Actores"]
@@ -46,7 +46,7 @@ flowchart TD
 
 ## 2. Relaciones entre componentes
 
-<!-- mermaid-checked: no \n, no em-dash/en-dash, no {} in labels, subgraphs are id["label"], arrows are -->|"label"|, all subgraphs closed by end, ids unique -->
+<!-- mermaid-checked: labels contain no line breaks or braces; subgraph IDs are valid; arrow labels are quoted; subgraphs are closed; node IDs are unique -->
 ```mermaid
 flowchart LR
     subgraph Presentacion["Presentacion"]
@@ -110,7 +110,7 @@ El filtro JWT intercepta las solicitudes protegidas antes de que alcancen los co
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Actor as "Administrador u operador"
+    participant Initiator as "Administrador u operador"
     participant UI as "Frontend"
     participant Filter as "JwtAuthenticationFilter"
     participant Auth as "AuthService"
@@ -127,7 +127,7 @@ sequenceDiagram
     participant Audit as "AuditoriaService"
     participant DB as "PostgreSQL"
 
-    Actor->>UI: Captura datos del cliente
+    Initiator->>UI: Captura datos del cliente
     UI->>Filter: POST api v1 clientes con JWT
     Filter->>Auth: validarToken
     Auth->>UserRepo: buscar cuenta activa
@@ -144,7 +144,7 @@ sequenceDiagram
     ClientSvc-->>ClientCtrl: ClienteDTO
     ClientCtrl-->>UI: 201 creado
 
-    Actor->>UI: Selecciona titular y registra QWE123
+    Initiator->>UI: Selecciona titular y registra QWE123
     UI->>Filter: POST api v1 registros entrada con clienteId
     Filter->>Auth: validarToken
     Auth->>UserRepo: buscar cuenta activa
@@ -183,7 +183,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Actor as "Operador"
+    participant Operador as "Operador"
     participant UI as "Frontend"
     participant Filter as "JwtAuthenticationFilter"
     participant Auth as "AuthService"
@@ -195,7 +195,7 @@ sequenceDiagram
     participant Audit as "AuditoriaService"
     participant DB as "PostgreSQL"
 
-    Actor->>UI: Busca placa QWE123
+    Operador->>UI: Busca placa QWE123
     UI->>Filter: PUT api v1 registros salida QWE123 con JWT
     Filter->>Auth: validarToken y cuenta activa
     Auth-->>Filter: identidad autenticada
@@ -217,7 +217,7 @@ sequenceDiagram
     RegSvc->>Audit: registrar salida
     RegSvc-->>RegCtrl: RegistroDTO CERRADO
     RegCtrl-->>UI: 200 salida confirmada
-    UI-->>Actor: muestra duración y liberación
+    UI-->>Operador: muestra duración y liberación
 ```
 
 ## 5. Modelo de datos de Iteración 2
