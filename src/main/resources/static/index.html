@@ -34,6 +34,9 @@
         <button class="nav-link" data-view="entrada">↘ <span>Registrar entrada</span></button>
         <button class="nav-link" data-view="salida">↗ <span>Registrar salida</span></button>
         <button class="nav-link" data-view="novedades">⚑ <span>Novedades</span></button>
+        <button class="nav-link" data-view="clientes">◉ <span>Clientes</span></button>
+        <button class="nav-link" data-view="celdas">▤ <span>Celdas</span></button>
+        <button class="nav-link" data-view="usuarios" data-admin-only>👥 <span>Personal</span></button>
       </nav>
       <div class="sidebar-bottom"><span class="online-dot"></span> Sistema operativo</div>
     </aside>
@@ -47,8 +50,8 @@
       <section id="dashboard-view" class="view-section">
         <div class="welcome-row"><div><h1>Panel de ocupación</h1><p class="muted">Estado actual de las instalaciones y actividad reciente.</p></div><button class="button primary" data-go="entrada">＋ Nueva entrada</button></div>
         <div class="metric-grid">
-          <article class="metric-card"><span class="metric-icon blue">▦</span><span class="metric-label">Capacidad total</span><strong id="metric-total">—</strong><small>celdas habilitadas</small></article>
-          <article class="metric-card"><span class="metric-icon green">✓</span><span class="metric-label">Disponibles</span><strong id="metric-free">—</strong><small>espacios libres</small></article>
+          <article class="metric-card"><span class="metric-icon blue">▦</span><span class="metric-label">Capacidad total</span><strong id="metric-total">—</strong><small>celdas del inventario</small></article>
+          <article class="metric-card"><span class="metric-icon green">✓</span><span class="metric-label">Disponibles</span><strong id="metric-free">—</strong><small>listas para asignar</small></article>
           <article class="metric-card"><span class="metric-icon orange">↗</span><span class="metric-label">Ocupadas</span><strong id="metric-occupied">—</strong><small>vehículos en el patio</small></article>
           <article class="metric-card"><span class="metric-icon violet">◷</span><span class="metric-label">Ocupación</span><strong id="metric-percent">—</strong><small>porcentaje actual</small></article>
         </div>
@@ -68,6 +71,21 @@
           <div class="field"><label for="entry-make">Marca</label><input id="entry-make" name="marca" maxlength="50" required></div>
           <div class="field"><label for="entry-model">Modelo</label><input id="entry-model" name="modelo" maxlength="50" required></div>
           <div class="field"><label for="entry-color">Color</label><input id="entry-color" name="color" maxlength="30" required></div>
+          <div class="field wide">
+            <label for="entry-client-search">Titular / Cliente registrado <span>(opcional)</span></label>
+            <div class="search-row">
+              <input id="entry-client-search" placeholder="Buscar cliente por documento o nombre">
+              <button id="entry-client-search-button" class="button subtle" type="button">Buscar cliente</button>
+              <button id="entry-client-new-button" class="button subtle" type="button">＋ Crear cliente</button>
+            </div>
+            <input type="hidden" id="entry-client-id" name="clienteId">
+            <div id="entry-client-selected" class="info-note" hidden>
+              <span>Cliente seleccionado: </span><strong id="entry-client-name"></strong>
+              <button id="entry-client-clear" class="button subtle" type="button" style="margin-left:8px;padding:2px 8px;">Quitar selección</button>
+            </div>
+            <p id="entry-client-info" class="hint"></p>
+            <p id="entry-client-search-error" class="error-text" role="alert"></p>
+          </div>
           <div class="field"><label for="owner-name">Nombre del propietario <span>(opcional)</span></label><input id="owner-name" name="propietarioNombre" maxlength="120"></div>
           <div class="field"><label for="owner-document">Documento <span>(opcional)</span></label><input id="owner-document" name="propietarioDocumento" maxlength="20"></div>
           <div class="field"><label for="owner-phone">Teléfono <span>(opcional)</span></label><input id="owner-phone" name="propietarioTelefono" maxlength="20"></div>
@@ -88,6 +106,182 @@
           <div class="field wide"><label for="incident-description">Descripción</label><textarea id="incident-description" rows="4" required></textarea></div>
           <div class="field wide"><label for="incident-evidence">URL de evidencia <span>(opcional)</span></label><input id="incident-evidence" type="url" placeholder="https://..."></div>
         </div><div class="form-actions"><button class="button primary" type="submit">Guardar novedad</button></div></form>
+      </section>
+
+      <section id="clientes-view" class="view-section" hidden>
+        <div class="section-intro"><span class="section-icon blue">◉</span><div><h1>Clientes del parqueadero</h1><p class="muted">Titulares de los vehículos. No son cuentas de acceso: no tienen contraseña ni rol.</p></div></div>
+
+        <div class="panel search-panel">
+          <div class="clients-toolbar">
+            <label for="client-search">Buscar por documento o nombre</label>
+            <input id="client-search" placeholder="Documento o nombre" maxlength="120">
+            <select id="client-status" aria-label="Filtro por estado">
+              <option value="">Todos</option>
+              <option value="true">Activos</option>
+              <option value="false">Inactivos</option>
+            </select>
+            <button id="client-search-button" class="button primary" type="button">Buscar</button>
+            <button id="client-new-button" class="button subtle" type="button">＋ Nueva ficha</button>
+            <button id="client-unlinked-button" class="button subtle" type="button">Vehículos sin titular</button>
+          </div>
+        </div>
+
+        <form id="client-form" class="panel form-panel" hidden>
+          <h3 id="client-form-title">Nueva ficha de cliente</h3>
+          <div class="form-grid">
+            <div class="field"><label for="client-doctype">Tipo de documento</label><select id="client-doctype">
+              <option value="CC">Cédula de ciudadanía</option>
+              <option value="CE">Cédula de extranjería</option>
+              <option value="TI">Tarjeta de identidad</option>
+              <option value="PASAPORTE">Pasaporte</option>
+              <option value="OTRO">Otro</option>
+            </select></div>
+            <div class="field"><label for="client-document">Documento</label><input id="client-document" maxlength="20" required></div>
+            <div class="field"><label for="client-name">Nombre completo</label><input id="client-name" maxlength="120" required></div>
+            <div class="field"><label for="client-phone">Teléfono</label><input id="client-phone" maxlength="20" required></div>
+          </div>
+          <p class="hint">La identidad única es la pareja tipo de documento y documento. No se validan dígitos de documentos oficiales.</p>
+          <p id="client-form-error" class="error-text" role="alert"></p>
+          <div class="form-actions"><button id="client-form-cancel" class="button subtle" type="button">Cancelar</button><button class="button primary" type="submit">Guardar cliente</button></div>
+        </form>
+
+        <p id="clients-status" class="muted" role="status" aria-live="polite"></p>
+        <article class="panel">
+          <div class="table-wrap"><table>
+            <thead><tr><th>Documento</th><th>Nombre</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody id="clients-rows"><tr><td colspan="5" class="empty-state">Cargando clientes…</td></tr></tbody>
+          </table></div>
+          <div class="form-actions">
+            <button id="clients-prev" class="button subtle" type="button">← Anteriores</button>
+            <span id="clients-page" class="muted">Página 1</span>
+            <button id="clients-next" class="button subtle" type="button">Siguientes →</button>
+          </div>
+        </article>
+
+        <article id="client-vehicles-panel" class="panel" hidden>
+          <div class="panel-heading"><div><h3 id="client-vehicles-title">Vehículos del cliente</h3><p class="muted">Titular actual según la información registrada.</p></div></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Placa</th><th>Vehículo</th><th>Estado de vinculación</th></tr></thead>
+            <tbody id="client-vehicles-rows"><tr><td colspan="3" class="empty-state">Sin vehículos.</td></tr></tbody>
+          </table></div>
+          <div class="clients-toolbar">
+            <label for="link-plate">Vincular un vehículo a este cliente</label>
+            <input id="link-plate" placeholder="ABC123" maxlength="7">
+            <button id="link-vehicle-button" class="button primary" type="button">Vincular titular</button>
+          </div>
+          <p id="link-vehicle-error" class="error-text" role="alert"></p>
+        </article>
+      </section>
+
+      <section id="celdas-view" class="view-section" hidden>
+        <div class="section-intro"><span class="section-icon blue">▤</span><div><h1>Celdas del parqueadero</h1><p class="muted">Inventario de espacios. El estado «Ocupada» se produce al registrar la entrada de un vehículo: no se marca a mano.</p></div></div>
+
+        <div class="panel search-panel">
+          <div class="clients-toolbar">
+            <label for="cell-search">Buscar por código</label>
+            <input id="cell-search" placeholder="A-01" maxlength="10">
+            <select id="cell-active" aria-label="Filtro por estado del inventario">
+              <option value="">Inventario: todos</option>
+              <option value="true">Activas</option>
+              <option value="false">Inactivas</option>
+            </select>
+            <select id="cell-state" aria-label="Filtro por estado operativo">
+              <option value="">Estado: todos</option>
+              <option value="DISPONIBLE">Disponible</option>
+              <option value="OCUPADA">Ocupada</option>
+              <option value="MANTENIMIENTO">Mantenimiento</option>
+            </select>
+            <select id="cell-type" aria-label="Filtro por tipo de vehículo">
+              <option value="">Tipo: todos</option>
+              <option value="CARRO">Carro</option>
+              <option value="MOTO">Moto</option>
+              <option value="CAMIONETA">Camioneta</option>
+            </select>
+            <input id="cell-floor" type="number" min="1" max="20" placeholder="Piso" aria-label="Filtro por piso">
+            <button id="cell-search-button" class="button primary" type="button">Buscar</button>
+            <button id="cell-new-button" class="button subtle" type="button" data-admin-only>＋ Nueva celda</button>
+          </div>
+          <p class="hint">Una celda es asignable solo si está activa, en estado disponible y sin un vehículo adentro. Las inactivas y las de mantenimiento quedan fuera de la operación.</p>
+        </div>
+
+        <form id="cell-form" class="panel form-panel" hidden>
+          <h3 id="cell-form-title">Nueva celda</h3>
+          <div class="form-grid">
+            <div class="field"><label for="cell-code">Código</label><input id="cell-code" maxlength="10" required></div>
+            <div class="field"><label for="cell-floor-input">Piso</label><input id="cell-floor-input" type="number" min="1" max="20" required></div>
+            <div class="field"><label for="cell-type-input">Tipo de vehículo</label><select id="cell-type-input">
+              <option value="CARRO">Carro</option>
+              <option value="MOTO">Moto</option>
+              <option value="CAMIONETA">Camioneta</option>
+            </select></div>
+            <div class="field wide"><label for="cell-notes">Observaciones <span>(opcional)</span></label><textarea id="cell-notes" rows="3" maxlength="255"></textarea></div>
+          </div>
+          <p id="cell-form-hint" class="hint" hidden>La celda está ocupada: el código, el piso y el tipo se conservan mientras el vehículo esté adentro. Solo puedes cambiar las observaciones.</p>
+          <p id="cell-form-error" class="error-text" role="alert"></p>
+          <div class="form-actions"><button id="cell-form-cancel" class="button subtle" type="button">Cancelar</button><button class="button primary" type="submit">Guardar celda</button></div>
+        </form>
+
+        <p id="cells-status" class="muted" role="status" aria-live="polite"></p>
+        <article class="panel">
+          <div class="table-wrap"><table>
+            <thead><tr><th>Código</th><th>Piso</th><th>Tipo</th><th>Estado operativo</th><th>Inventario</th><th>Asignable</th><th>Observaciones</th><th>Acciones</th></tr></thead>
+            <tbody id="cells-rows"><tr><td colspan="8" class="empty-state">Cargando celdas…</td></tr></tbody>
+          </table></div>
+          <div class="form-actions">
+            <button id="cells-prev" class="button subtle" type="button">← Anteriores</button>
+            <span id="cells-page" class="muted">Página 1</span>
+            <button id="cells-next" class="button subtle" type="button">Siguientes →</button>
+          </div>
+        </article>
+      </section>
+      <section id="usuarios-view" class="view-section" hidden>
+        <div class="section-intro"><span class="section-icon blue">👥</span><div><h1>Cuentas del personal</h1><p class="muted">Gestión de usuarios del sistema (administradores y operadores). Solo administradores.</p></div></div>
+
+        <div class="panel search-panel">
+          <div class="clients-toolbar">
+            <label for="user-search">Buscar por nombre, documento o correo</label>
+            <input id="user-search" placeholder="Nombre, documento o correo" maxlength="120">
+            <select id="user-role-filter" aria-label="Filtro por rol">
+              <option value="">Rol: todos</option>
+              <option value="ADMINISTRADOR">Administrador</option>
+              <option value="OPERADOR">Operador</option>
+            </select>
+            <select id="user-active-filter" aria-label="Filtro por estado">
+              <option value="">Estado: todos</option>
+              <option value="true">Activos</option>
+              <option value="false">Inactivos</option>
+            </select>
+            <button id="user-search-button" class="button primary" type="button">Buscar</button>
+            <button id="user-new-button" class="button subtle" type="button" data-admin-only>＋ Nueva cuenta</button>
+          </div>
+        </div>
+
+        <form id="user-form" class="panel form-panel" hidden>
+          <h3 id="user-form-title">Nueva cuenta del personal</h3>
+          <div class="form-grid">
+            <div class="field"><label for="user-name-input">Nombre</label><input id="user-name-input" maxlength="100" required></div>
+            <div class="field"><label for="user-lastname-input">Apellido</label><input id="user-lastname-input" maxlength="100" required></div>
+            <div class="field"><label for="user-doc-input">Documento</label><input id="user-doc-input" maxlength="20" required></div>
+            <div class="field"><label for="user-email-input">Correo electrónico</label><input id="user-email-input" type="email" maxlength="120" required></div>
+            <div class="field"><label for="user-phone-input">Teléfono</label><input id="user-phone-input" maxlength="20" required></div>
+            <div class="field"><label for="user-type-input">Rol</label><select id="user-type-input">
+              <option value="OPERADOR">Operador</option>
+              <option value="ADMINISTRADOR">Administrador</option>
+            </select></div>
+            <div id="user-password-field" class="field wide"><label for="user-password-input">Contraseña inicial <span>(mínimo 15 caracteres)</span></label><input id="user-password-input" type="password" minlength="15" autocomplete="new-password"></div>
+          </div>
+          <p id="user-form-hint" class="hint" hidden>La contraseña no se modifica aquí.</p>
+          <p id="user-form-error" class="error-text" role="alert"></p>
+          <div class="form-actions"><button id="user-form-cancel" class="button subtle" type="button">Cancelar</button><button class="button primary" type="submit">Guardar cuenta</button></div>
+        </form>
+
+        <p id="users-status" class="muted" role="status" aria-live="polite"></p>
+        <article class="panel">
+          <div class="table-wrap"><table>
+            <thead><tr><th>Nombre</th><th>Documento</th><th>Correo</th><th>Teléfono</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody id="users-rows"><tr><td colspan="7" class="empty-state">Cargando cuentas…</td></tr></tbody>
+          </table></div>
+        </article>
       </section>
     </main>
   </div>

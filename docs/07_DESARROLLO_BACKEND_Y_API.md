@@ -111,7 +111,7 @@ Content-Type: application/json
 
 {
   "email": "operador@autoscolombia.com",
-  "password": "clave123"
+  "password": "<CONFIGURAR_LOCALMENTE>"
 }
 ```
 

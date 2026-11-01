@@ -47,20 +47,32 @@ class VehiculoControllerTest {
     }
 
     @Test
-    void crearVehiculoDevuelve201() {
+    void crearVehiculoDevuelve201ConLaProyeccionDelServicio() {
         var dto = VehiculoDTO.builder().placa("ABC123").build();
+        var guardado = com.autoscolombia.domain.model.Vehiculo.builder().placa("ABC123").build();
+        var proyeccion = VehiculoDTO.builder().placa("ABC123").clienteId(4L).build();
+        when(vehiculoService.crearOActualizar(dto)).thenReturn(guardado);
+        when(vehiculoService.toDTO(guardado)).thenReturn(proyeccion);
+
         var response = controller.crear(dto);
+
         assertEquals(201, response.getStatusCode().value());
-        assertSame(dto, response.getBody());
-        verify(vehiculoService).crearOActualizar(dto);
+        assertSame(proyeccion, response.getBody());
     }
 
     @Test
-    void actualizarVehiculoDelegaAlServicio() {
-        var dto = VehiculoDTO.builder().placa("XYZ999").build();
-        var response = controller.actualizar(9L, dto);
+    void actualizarVehiculoRespondeLaProyeccionYNoElCuerpoRecibido() {
+        var recibido = VehiculoDTO.builder().placa("XYZ999").propietarioNombre("Texto libre").build();
+        var guardado = com.autoscolombia.domain.model.Vehiculo.builder().placa("XYZ999").build();
+        var proyeccion = VehiculoDTO.builder().placa("XYZ999").propietarioNombre("Ana Pérez").clienteId(8L).build();
+        when(vehiculoService.crearOActualizar(recibido)).thenReturn(guardado);
+        when(vehiculoService.toDTO(guardado)).thenReturn(proyeccion);
+
+        var response = controller.actualizar(9L, recibido);
+
         assertEquals(200, response.getStatusCode().value());
-        assertSame(dto, response.getBody());
-        verify(vehiculoService).crearOActualizar(dto);
+        assertSame(proyeccion, response.getBody());
+        assertNotSame(recibido, response.getBody(),
+                "La respuesta sale de la proyección: un texto libre contradictorio no se devuelve como titular");
     }
 }

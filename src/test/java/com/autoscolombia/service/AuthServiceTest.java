@@ -147,4 +147,15 @@ class AuthServiceTest {
             authService.validarToken("invalid-token");
         });
     }
+
+    @Test
+    void testValidarToken_CuentaInactivaSeRechazaAunqueElTokenEsteVigente() {
+        usuario.setActivo(false);
+        when(jwtUtil.extractUsername(anyString())).thenReturn(usuario.getCorreo());
+        when(usuarioRepository.findByCorreo(anyString())).thenReturn(Optional.of(usuario));
+
+        assertThrows(AuthenticationException.class, () -> authService.validarToken("token-vigente"));
+
+        verify(jwtUtil, never()).validateToken(anyString(), any(UserDetails.class));
+    }
 }

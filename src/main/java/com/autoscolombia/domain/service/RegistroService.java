@@ -46,6 +46,11 @@ public class RegistroService {
 
     /**
      * Registra la entrada de un vehículo al parqueadero.
+     *
+     * <p>Orden de bloqueos de toda la transacción: primero la fila del vehículo y después la de la celda
+     * ({@link CeldaService#asignarCeldaDisponible}). Ninguna otra ruta bloquea al revés, así que dos ingresos
+     * concurrentes no pueden cerrarse en un interbloqueo. Cada bloqueo se usa para revalidar, no para suponer
+     * que el estado sigue igual que en la lectura anterior.
      */
     @Transactional
     public Registro registrarEntrada(RegistroEntradaDTO dto, String operadorCorreo) {
@@ -55,11 +60,23 @@ public class RegistroService {
             throw new BusinessRuleException(mensaje);
         }
 
-        // Verificar si el vehículo ya tiene un registro activo
+        // Bloquear la fila del vehículo: si entra otro vehículo a la vez, este bloqueo es el que decide el orden
+        Optional<Vehiculo> vehiculoBloqueado =
+                vehiculoRepository.buscarConBloqueoPorPlaca(dto.getPlaca());
+
+        // Verificar si el vehículo ya tiene un registro activo, ya con la fila bloqueada
         Optional<Registro> registroActivo = registroRepository.findByVehiculoPlacaAndEstado(dto.getPlaca(), EstadoRegistro.ACTIVO);
         if (registroActivo.isPresent()) {
             throw new BusinessRuleException("El vehículo ya tiene un registro activo en el parqueadero");
         }
+
+        // Un cliente dado de baja lógica no admite nuevos ingresos de sus vehículos vinculados.
+        // La salida de un vehículo que ya está dentro sigue permitida: esa regla no se aplica aquí.
+        vehiculoBloqueado
+                .filter(vehiculo -> !ClienteService.permiteNuevoIngreso(vehiculo.getCliente()))
+                .ifPresent(vehiculo -> {
+                    throw new BusinessRuleException(ClienteService.MENSAJE_CLIENTE_INACTIVO);
+                });
 
         // Buscar o crear vehículo
         Vehiculo vehiculo = vehiculoService.crearOActualizar(
@@ -74,6 +91,16 @@ public class RegistroService {
                         .propietarioTelefono(dto.getPropietarioTelefono())
                         .build()
         );
+
+        // Si la solicitud incluye vincular cliente, se aplica mediante las reglas de negocio de titularidad
+        if (dto.getClienteId() != null) {
+            vehiculo = vehiculoService.vincularCliente(vehiculo.getPlaca(), dto.getClienteId(), operadorCorreo);
+        }
+
+        // Un cliente dado de baja lógica no admite nuevos ingresos de sus vehículos vinculados
+        if (!ClienteService.permiteNuevoIngreso(vehiculo.getCliente())) {
+            throw new BusinessRuleException(ClienteService.MENSAJE_CLIENTE_INACTIVO);
+        }
 
         // Asignar celda disponible
         Celda celda = celdaService.asignarCeldaDisponible(dto.getTipo());
@@ -126,8 +153,8 @@ public class RegistroService {
 
         registro = registroRepository.save(registro);
 
-        // Liberar celda
-        celdaService.liberarCelda(registro.getCelda().getId());
+        // Liberar solo la celda de este registro, ya cerrado y sobre su fila bloqueada
+        celdaService.liberarCelda(registro.getCelda().getId(), registro.getId());
 
         // Generar comprobante de salida
         generarComprobante(registro, TipoComprobante.SALIDA);
@@ -161,8 +188,8 @@ public class RegistroService {
 
         registro = registroRepository.save(registro);
 
-        // Liberar celda
-        celdaService.liberarCelda(registro.getCelda().getId());
+        // Liberar la celda de este registro cancelado; si otra estancia sigue activa sobre ella, se rechaza
+        celdaService.liberarCelda(registro.getCelda().getId(), registro.getId());
 
         // Registrar en auditoría
         auditoriaService.registrar("REGISTRO_CANCELAR", "Registro", registro.getId(), null, "EXITO",

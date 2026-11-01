@@ -2,7 +2,11 @@ package com.autoscolombia.service;
 
 import com.autoscolombia.domain.enums.TipoVehiculo;
 import com.autoscolombia.domain.model.Vehiculo;
+import com.autoscolombia.domain.service.AuditoriaService;
 import com.autoscolombia.domain.service.VehiculoService;
+import com.autoscolombia.infrastructure.repository.ClienteRepository;
+import com.autoscolombia.infrastructure.repository.RegistroRepository;
+import com.autoscolombia.infrastructure.repository.UsuarioRepository;
 import com.autoscolombia.infrastructure.repository.VehiculoRepository;
 import com.autoscolombia.presentation.dto.VehiculoDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +30,18 @@ class VehiculoServiceTest {
 
     @Mock
     private VehiculoRepository vehiculoRepository;
+
+    @Mock
+    private ClienteRepository clienteRepository;
+
+    @Mock
+    private UsuarioRepository usuarioRepository;
+
+    @Mock
+    private RegistroRepository registroRepository;
+
+    @Mock
+    private AuditoriaService auditoriaService;
 
     @InjectMocks
     private VehiculoService vehiculoService;
