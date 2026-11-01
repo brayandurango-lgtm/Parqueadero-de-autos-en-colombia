@@ -90,11 +90,20 @@ public class AuthService {
 
     /**
      * Valida un token JWT y retorna los detalles del usuario.
+     *
+     * <p>Se consulta el estado de la cuenta en cada petición protegida: un token firmado y aún vigente
+     * deja de autenticar si la cuenta fue desactivada. Es una comprobación de estado, no una revocación
+     * persistente del token; si la cuenta vuelve a activarse, ese mismo token recupera el acceso hasta
+     * su expiración natural.
      */
     public UserDetails validarToken(String token) {
         String username = jwtUtil.extractUsername(token);
         Usuario usuario = usuarioRepository.findByCorreo(username)
                 .orElseThrow(() -> new AuthenticationException("Usuario no encontrado"));
+
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            throw new AuthenticationException("La cuenta de usuario está inactiva");
+        }
 
         UserDetails userDetails = User.builder()
                 .username(usuario.getCorreo())

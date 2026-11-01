@@ -65,6 +65,17 @@ public class Vehiculo {
     @Column(name = "propietario_telefono", length = 20)
     private String propietarioTelefono;
 
+    /**
+     * Titular actual del vehículo cuando ya fue vinculado a un cliente registrado.
+     *
+     * <p>Es {@code null} en los vehículos creados antes de la Iteración 2: esos siguen funcionando con los
+     * campos {@code propietario_*} hasta que un operador los vincule. La carga es EAGER porque la proyección
+     * a DTO recorre este objeto desde lecturas que no están dentro de una transacción.
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id", foreignKey = @ForeignKey(name = "fk_vehiculo_cliente"))
+    private Cliente cliente;
+
     @NotNull(message = "La fecha de registro es obligatoria")
     @Column(name = "fecha_registro", nullable = false, updatable = false)
     @Builder.Default

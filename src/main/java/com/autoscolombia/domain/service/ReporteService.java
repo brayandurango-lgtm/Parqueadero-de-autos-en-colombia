@@ -41,6 +41,13 @@ public class ReporteService {
         long celdasTotal = celdaRepository.findAll().size();
         double porcentajeOcupacion = celdasTotal > 0 ? (celdasOcupadas * 100.0 / celdasTotal) : 0.0;
 
+        // Conteos del bloque B3: el inventario se mira por las dos dimensiones que tiene, estado operativo y
+        // estado lógico. «Disponibles» no es countByEstado(DISPONIBLE): una celda inactiva o con un registro
+        // activo puede tener ese estado y aun así no admitir un ingreso.
+        long celdasActivas = celdaRepository.countByActivoTrue();
+        long celdasDisponibles = celdaRepository.contarAsignables();
+        long celdasMantenimiento = celdaRepository.countByEstado(EstadoCelda.MANTENIMIENTO);
+
         // Vehículos del día
         LocalDateTime inicioDia = LocalDate.now().atStartOfDay();
         LocalDateTime finDia = LocalDate.now().atTime(23, 59, 59);
@@ -60,6 +67,9 @@ public class ReporteService {
         return DashboardDTO.builder()
                 .celdasOcupadas(celdasOcupadas)
                 .celdasTotal(celdasTotal)
+                .celdasActivas(celdasActivas)
+                .celdasDisponibles(celdasDisponibles)
+                .celdasMantenimiento(celdasMantenimiento)
                 .porcentajeOcupacion(Math.round(porcentajeOcupacion * 100.0) / 100.0)
                 .vehiculosHoy(vehiculosHoy)
                 .novedadesPendientes(novedadesPendientes)

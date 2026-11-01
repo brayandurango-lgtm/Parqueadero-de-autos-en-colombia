@@ -139,6 +139,37 @@ class RegistroServiceTest {
     }
 
     @Test
+    void testRegistrarEntrada_ConClienteValido_VinculaCliente() {
+        entradaDTO.setClienteId(10L);
+        when(picoYPlacaService.puedeTransitar(anyString())).thenReturn(true);
+        when(registroRepository.findByVehiculoPlacaAndEstado(anyString(), eq(EstadoRegistro.ACTIVO)))
+                .thenReturn(Optional.empty());
+        when(vehiculoService.crearOActualizar(any())).thenReturn(vehiculo);
+        when(vehiculoService.vincularCliente(eq("ABC123"), eq(10L), eq("operador@autoscolombia.com")))
+                .thenReturn(vehiculo);
+        when(celdaService.asignarCeldaDisponible(any(TipoVehiculo.class))).thenReturn(celda);
+        when(usuarioRepository.findByCorreo(anyString())).thenReturn(Optional.of(usuario));
+        when(registroRepository.save(any(Registro.class))).thenReturn(registro);
+
+        Registro resultado = registroService.registrarEntrada(entradaDTO, "operador@autoscolombia.com");
+
+        assertNotNull(resultado);
+        verify(vehiculoService).vincularCliente("ABC123", 10L, "operador@autoscolombia.com");
+    }
+
+    @Test
+    void testRegistrarEntrada_VehiculoExistenteConClienteInactivo_RechazaIngreso() {
+        Cliente clienteInactivo = Cliente.builder().id(5L).activo(false).build();
+        Vehiculo vehiculoConClienteInactivo = Vehiculo.builder().id(1L).placa("ABC123").cliente(clienteInactivo).build();
+        when(picoYPlacaService.puedeTransitar(anyString())).thenReturn(true);
+        when(vehiculoRepository.buscarConBloqueoPorPlaca("ABC123")).thenReturn(Optional.of(vehiculoConClienteInactivo));
+        when(registroRepository.findByVehiculoPlacaAndEstado("ABC123", EstadoRegistro.ACTIVO)).thenReturn(Optional.empty());
+
+        assertThrows(BusinessRuleException.class, () ->
+                registroService.registrarEntrada(entradaDTO, "operador@autoscolombia.com"));
+    }
+
+    @Test
     void testRegistrarEntrada_PicoYPlacaRestringe() {
         when(picoYPlacaService.puedeTransitar(anyString())).thenReturn(false);
         when(picoYPlacaService.obtenerMensajeRestriccion(anyString()))
@@ -172,7 +203,9 @@ class RegistroServiceTest {
         assertNotNull(resultado);
         assertEquals(EstadoRegistro.CERRADO, resultado.getEstado());
         assertNotNull(resultado.getFechaHoraSalida());
-        verify(celdaService, times(1)).liberarCelda(anyLong());
+        // B3: la salida libera la celda de SU registro, con el identificador del registro para que el
+        // servicio pueda rechazar una celda ocupada por otro. Aquí ambos fixtures valen 1L.
+        verify(celdaService, times(1)).liberarCelda(1L, 1L);
     }
 
     @Test
@@ -195,7 +228,7 @@ class RegistroServiceTest {
 
         assertNotNull(resultado);
         assertEquals(EstadoRegistro.CANCELADO, resultado.getEstado());
-        verify(celdaService, times(1)).liberarCelda(anyLong());
+        verify(celdaService, times(1)).liberarCelda(1L, 1L);
     }
 
     @Test

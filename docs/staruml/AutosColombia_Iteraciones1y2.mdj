@@ -1,0 +1,361 @@
+{
+  "_type": "Project",
+  "_id": "PROJ_2000",
+  "name": "Autos Colombia - Iteraciones 1 y 2 - Secuencia y Componentes",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "MODEL_2001",
+      "name": "Modelo de Software - Autos Colombia Iteraciones 1 y 2",
+      "ownedElements": [
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2001",
+          "name": "Secuencia - Registrar Entrada de Vehiculo (Iteracion 1)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2002",
+          "name": "Secuencia - Registrar Salida de Vehiculo (Iteracion 1)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2003",
+          "name": "Secuencia - Cancelar Registro Activo (Iteracion 1)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2004",
+          "name": "Secuencia - Crear Cliente (Iteracion 2)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2005",
+          "name": "Secuencia - Vincular Vehiculo a Cliente (Iteracion 2)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2006",
+          "name": "Secuencia - Crear Cuenta del Personal (Iteracion 2)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2007",
+          "name": "Secuencia - Activar/Desactivar Usuario con Proteccion de Ultimo Administrador (Iteracion 2)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2008",
+          "name": "Secuencia - Crear Celda (Iteracion 2)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2009",
+          "name": "Secuencia - Gestionar Estado de Celda (Mantenimiento/Disponible) (Iteracion 2)"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "DIAG_SEQ_2010",
+          "name": "Secuencia - Desactivar/Reactivar Celda (Iteracion 2)"
+        },
+        {
+          "_type": "UMLComponentDiagram",
+          "_id": "DIAG_COMP_2001",
+          "name": "Diagrama de Componentes - Iteraciones 1 y 2"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "ACT_2001",
+          "name": "Operador de Parqueadero"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "ACT_2002",
+          "name": "Administrador del Sistema"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "ACT_2003",
+          "name": "Cliente del Parqueadero"
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2001",
+          "name": "Interfaz Web (Frontend)",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2001",
+              "name": "Vistas HTML/CSS/JS",
+              "visibility": "public",
+              "type": "Static"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2002",
+          "name": "API REST - Controladores",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2002",
+              "name": "AuthController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2003",
+              "name": "RegistroController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2004",
+              "name": "UsuarioController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2005",
+              "name": "ClienteController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2006",
+              "name": "VehiculoController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2007",
+              "name": "CeldaController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2008",
+              "name": "ComprobanteController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2009",
+              "name": "NovedadController",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2010",
+              "name": "ReporteController",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2003",
+          "name": "Autenticacion y Autorizacion",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2011",
+              "name": "AuthService",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2012",
+              "name": "JwtUtil",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2013",
+              "name": "SecurityConfig",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2004",
+          "name": "Servicios de Personal",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2014",
+              "name": "UsuarioService",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2005",
+          "name": "Servicios de Clientes y Vehiculos",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2015",
+              "name": "ClienteService",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2016",
+              "name": "VehiculoService",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2006",
+          "name": "Servicios de Celdas",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2017",
+              "name": "CeldaService",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2007",
+          "name": "Servicios de Entradas y Salidas",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2018",
+              "name": "RegistroService",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2019",
+              "name": "PicoYPlacaService",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2008",
+          "name": "Servicios de Auditoria",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2020",
+              "name": "AuditoriaService",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2009",
+          "name": "Persistencia - Repositorios",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2021",
+              "name": "UsuarioRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2022",
+              "name": "ClienteRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2023",
+              "name": "VehiculoRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2024",
+              "name": "CeldaRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2025",
+              "name": "RegistroRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2026",
+              "name": "ComprobanteRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2027",
+              "name": "NovedadRepository",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2028",
+              "name": "AuditoriaRepository",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2010",
+          "name": "PostgreSQL - Base de Datos",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2029",
+              "name": "Tablas: usuario, cliente, vehiculo, celda, registro, comprobante, novedad, auditoria_log",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2030",
+              "name": "Migraciones Flyway V1, V2, V3",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2011",
+          "name": "Servicios de Reportes",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2031",
+              "name": "ReporteService",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLComponent",
+          "_id": "COMP_2012",
+          "name": "Servicios de Novedades",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "ATTR_2032",
+              "name": "NovedadService",
+              "visibility": "public"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

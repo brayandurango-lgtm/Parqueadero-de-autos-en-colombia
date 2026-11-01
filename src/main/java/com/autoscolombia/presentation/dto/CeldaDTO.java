@@ -21,4 +21,13 @@ public class CeldaDTO {
     private TipoVehiculo tipoVehiculo;
     private EstadoCelda estado;
     private String observaciones;
+
+    /** Baja lógica. {@code estado} sigue siendo el estado operativo; no se inventa un cuarto valor. */
+    private Boolean activo;
+
+    /**
+     * Derivado, nunca escrito: la celda admite un ingreso nuevo ahora mismo (activa, DISPONIBLE y sin
+     * registro ACTIVO). La interfaz lo usa para la etiqueta «Inactiva» y para ocultar acciones inválidas.
+     */
+    private Boolean disponible;
 }

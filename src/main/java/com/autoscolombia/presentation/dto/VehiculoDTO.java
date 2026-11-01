@@ -48,4 +48,10 @@ public class VehiculoDTO {
 
     @Size(max = 20, message = "El teléfono del propietario no puede exceder 20 caracteres")
     private String propietarioTelefono;
+
+    /**
+     * Cliente titular actual. Es {@code null} cuando el vehículo proviene de la Iteración 1 y todavía no se
+     * le ha vinculado un cliente: en ese caso los campos {@code propietario_*} son la única fuente de datos.
+     */
+    private Long clienteId;
 }

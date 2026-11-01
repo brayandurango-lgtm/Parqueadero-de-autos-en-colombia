@@ -12,7 +12,8 @@ import lombok.*;
  * Entidad JPA que representa una celda de parqueadero.
  */
 @Entity
-@Table(name = "celda")
+@Table(name = "celda",
+        uniqueConstraints = @UniqueConstraint(name = "uk_celda_numero", columnNames = "numero"))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,7 +27,7 @@ public class Celda {
 
     @NotBlank(message = "El número de celda es obligatorio")
     @Size(max = 10, message = "El número de celda no puede exceder 10 caracteres")
-    @Column(name = "numero", nullable = false, unique = true, length = 10)
+    @Column(name = "numero", nullable = false, length = 10)
     private String numero;
 
     @NotNull(message = "El piso es obligatorio")
@@ -49,6 +50,14 @@ public class Celda {
     @Column(name = "observaciones", length = 255)
     private String observaciones;
 
+    /**
+     * Baja lógica. No es un cuarto estado operativo: una celda inactiva conserva el {@code estado} que tenía
+     * y simplemente deja de ser asignable.
+     */
+    @Column(name = "activo", nullable = false)
+    @Builder.Default
+    private Boolean activo = Boolean.TRUE;
+
     @PrePersist
     public void prePersist() {
         if (this.tipoVehiculo == null) {
@@ -56,6 +65,9 @@ public class Celda {
         }
         if (this.estado == null) {
             this.estado = EstadoCelda.DISPONIBLE;
+        }
+        if (this.activo == null) {
+            this.activo = Boolean.TRUE;
         }
     }
 }

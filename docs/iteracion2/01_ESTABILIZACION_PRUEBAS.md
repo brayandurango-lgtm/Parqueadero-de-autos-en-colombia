@@ -12,12 +12,24 @@
 
 La línea base registrada en `00_LINEA_BASE.md` arrojó **136 pruebas, 1 fallo, `BUILD FAILURE`**.
 
-Prueba que fallaba:
+Prueba que fallaba: `com.autoscolombia.integration.RegistroControllerIntegrationTest.testRegistrarEntrada_Exito`
+
+**Salida real de la corrida de línea base**, tomada del registro de consola de `mvn` capturado durante la
+Fase B (el directorio `target/surefire-reports/` ya no conserva ese fallo: las corridas posteriores lo
+sobrescribieron):
 
 ```
-com.autoscolombia.integration.RegistroControllerIntegrationTest.testRegistrarEntrada_Exito
-No such head found: expected <201> but was <409>
+[ERROR] com.autoscolombia.integration.RegistroControllerIntegrationTest.testRegistrarEntrada_Exito -- Time elapsed: 0.476 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<409>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at com.autoscolombia.integration.RegistroControllerIntegrationTest.testRegistrarEntrada_Exito(RegistroControllerIntegrationTest.java:134)
 ```
+
+> **Corrección documental.** Una versión anterior de este documento transcribió el fallo con el texto
+> «No such head found: expected <201> but was <409>». Esa cadena **no existe** en la salida de Surefire y
+> no debe atribuirse a la herramienta: fue un error de transcripción al redactar el informe. El texto
+> verificado es el bloque de arriba. Los resultados numéricos de la corrida (136 / 1 fallida) no cambian.
 
 **Causa raíz identificada:** `PicoYPlacaService` consultaba la hora del sistema de forma directa
 (`LocalDateTime.now()`) dentro de la cadena de producción de la regla. El test de integración usaba la
@@ -26,9 +38,17 @@ los dígitos 7 y 8 los viernes, así que la aplicación respondía `409 Conflict
 Placa en lugar del `201 Created` esperado.
 
 El fallo **no era un defecto de la regla de negocio**: era una prueba no determinista, cuyo resultado
-dependía del día del calendario en que se ejecutaba el build. Ejecutada un miércoles habría pasado;
-ejecutada un viernes, lunes o martes fallaba. Esto hace inestable cualquier verificación automática
-(local y CI) y oculta regresiones reales.
+dependía del día del calendario en que se ejecutaba el build.
+
+> **Corrección documental (segunda).** El borrador de esta sección afirmaba que la prueba fallaba
+> «viernes, lunes o martes». **Es inexacto.** Contra el código vigente
+> ([PicoYPlacaService.java:50-56](file:///C:/Users/Administrador/Downloads/Parqueadero%20de%20autos%20en%20colombia/src/main/java/com/autoscolombia/domain/service/PicoYPlacaService.java#L50)),
+> el dígito **7** está restringido **únicamente el viernes**: lunes (6,9), martes (0,1), miércoles (2,3),
+> jueves (4,5) y sábado/domingo (sin restricción) permitían que la prueba pasara. La dependencia del
+> calendario es real, pero su frecuencia es **una corrida de cada siete días** (todo viernes), no tres
+> días por semana. Eso sigue siendo inaceptable para CI —un push de viernes falla sin que nadie haya
+> cambiado nada—, pero la magnitud descrita estaba inflada.
+
 
 Restricciones impuestas para la corrección (todas respetadas):
 
@@ -212,7 +232,27 @@ node --test src/test/js/app.test.js
 | **fail** | **0** |
 | cancelled / skipped / todo | 0 / 0 / 0 |
 
-Node versión v24.18.0. Sin dependencias de npm (pruebas de humo del JS del frontend).
+**Versión de Node usada en esta corrida — verificación y corrección.** El borrador de esta línea decía
+«Node versión v24.18.0». Ese valor **no se midió en la shell donde se ejecutó la prueba**: se copió del
+metadato del entorno de la sesión (el runtime propio de la aplicación), por lo que **no hay evidencia de
+que `node --test` haya corrido en v24.18.0**. Verificación hecha ahora, en la misma ruta de PATH que
+resolvió el comando (`which -a node` → un único binario):
+
+| Comprobación | Resultado |
+|---|---|
+| Binario que resuelve `node` | `C:\Program Files\nodejs\node` |
+| `node --version` actual | **v26.7.0** |
+| Versión registrada en `00_LINEA_BASE.md` (Fase B) | v26.7.0 (medida en su momento) |
+| Otros binarios `node` en PATH | ninguno |
+
+Conclusión honesta: la versión **corriente verificada es v26.7.0**, y coincide con la de la línea base, así
+que **no hubo cambio de Node entre la Fase B y la estabilización**. La discrepancia v26.7.0 / v24.18.0 fue un
+error documental de este informe, no un hecho de las corridas. No se puede afirmar cuál versión usó
+exactamente la ejecución de las 4 pruebas de `app.test.js` en cada momento porque no se registró
+`node --version` dentro del mismo comando; lo verificable hoy es que el único Node instalado en PATH es
+v26.7.0.
+
+Sin dependencias de npm (pruebas de humo del JS del frontend).
 
 ### Resultado comparado contra la línea base
 
@@ -268,12 +308,35 @@ misma ejecución; se reporta la del total del informe como cifra oficial del pro
 La cobertura sube porque la corrida anterior abortó en el bloque de integración y esta completa las 139 pruebas
 (3 pruebas de integración/unidad adicionales + la que ahora pasa).
 
-### Lectura crítica de la métrica de ramas (16,2 %)
+### Lectura crítica de la métrica de ramas (16,2 %) — verificada, no atribuida por defecto
 
-El porcentaje bajo de ramas **no** significa que el dominio esté sin probar. El desglose por paquete muestra
-que **658 de las 890 ramas del proyecto (74 %) están en `presentation.dto` y tienen 0 % de cobertura**, y otras
-46 en `infrastructure.exception`; son ramas sintéticas de los métodos generados por Lombok
-(`equals`/`hashCode`/`builder` de DTOs y entidades). La lógica de negocio real sí está cubierta:
+El borrador de esta sección presentaba la presencia masiva de ramas sin cubrir en `presentation.dto` como
+consecuencia de Lombok, **sin haberlo comprobado**. Ahora está medido.
+
+**Cómo se verificó:** se recorrió `target/site/jacoco/jacoco.xml` (reporte de esta misma corrida) leyendo los
+contadores `BRANCH` a nivel de `<method>` dentro de cada `<class>`, y se agruparon las ramas perdidas por
+nombre de método. La suma cuadra con el total del informe: 746 ramas perdidas.
+
+| Origen de la rama perdida | Ramas | % de las 746 |
+|---|---:|---:|
+| Métodos generados por Lombok (`equals` 548, `hashCode` 156, `build` 5) | **709** | **95,0 %** |
+| Métodos escritos a mano | **37** | **5,0 %** |
+
+Las 37 ramas restantes sí son huecos reales de prueba y conviene nombrarlos:
+
+| Método | Ramas perdidas | Naturaleza |
+|---|---:|---|
+| `prePersist` (7 entidades, `@PrePersist` con guarda de `null`) | 13 | Callback de JPA; se cubre una rama, falta la del campo ya poblado |
+| `puedeTransitar` (`PicoYPlacaService`) | 5 | Faltan caminos de la regla (p. ej. placa cuyo último carácter no es dígito) |
+| `obtenerMensajeRestriccion` | 4 | Rama de día sin restricción |
+| `doFilterInternal` (`JwtAuthenticationFilter`) | 3 | Cabeceras de token ausentes/mal formadas |
+| `estaBloqueado` | 3 | Estado de usuario |
+| `actualizar`, `toDTO` | 2 + 2 | Ramas condicionales |
+| `validateToken`, `registrarSalida`, `login`, `registrarIntentoFallido`, `lambda$listar$1` | 1 c/u | Ramas de borde |
+
+**Conclusión corregida:** la métrica global de ramas está dominada por código generado (95 %), por lo que
+**no** es un indicador utilizable de la calidad de prueba del dominio. La lógica de negocio escrita a mano
+mantiene 87/106 ramas cubiertas en `domain.service`:
 
 | Paquete | Líneas | Ramas |
 |---------|-------:|------:|
@@ -286,6 +349,22 @@ que **658 de las 890 ramas del proyecto (74 %) están en `presentation.dto` y ti
 
 Se registra como deuda de medición (excluir Lombok en la configuración de JaCoCo), **no** como defecto de
 prueba, y **no** se modifica `pom.xml` en esta fase.
+
+### Qué afirma y qué NO afirma esta cobertura
+
+Estos porcentajes miden **solo** qué líneas y ramas del bytecode fueron ejecutadas al menos una vez durante
+la suite. **No** equivalen a calidad total, ni a ausencia de errores, ni a que el sistema funcione en
+producción. En concreto, esta corrida **no** demuestra que:
+
+- el DDL real de PostgreSQL sea correcto (las pruebas corren sobre H2);
+- la aplicación arranque contra una base PostgreSQL verdadera;
+- los flujos de UI respondan correctamente en un navegador;
+- los defectos ya documentados de la Iteración 1 (concurrencia en asignación de celda, liberación
+  incondicional, cambio manual de estado, usuario inactivo con token válido) estén resueltos. No lo están:
+  ninguna prueba actual los ejercita en su condición de fallo.
+
+Una métrica de cobertura alta con pruebas mal elegidas sigue siendo pruebas mal elegidas. El valor real de
+esta corrida es otro: **las 139 pruebas son deterministas y pasaron en viernes**.
 
 ---
 
@@ -328,5 +407,26 @@ prueba, y **no** se modifica `pom.xml` en esta fase.
    handler de `DataIntegrityViolationException`, validación de usuario inactivo al validar token, CRUD de
    usuarios y celdas integrado con entrada/salida, entidad `Cliente`, pagos (fuera de esta iteración), y los
    diagramas de secuencia y componentes en StarUML.
-10. **Sin operación Git:** no se ejecutaron `add`, `commit` ni `push`; el repositorio de destino conserva su
-    `.git` y su remote de origen, sin commits.
+10. **Sin operación Git ejecutada por este agente en la fase de estabilización:** no se corrió `add`,
+    `commit` ni `push`. El repositorio ya no está sin commits: existe el commit `e701c75` (creado y publicado
+    a `origin/main` después de esta corrida) y su push activó el workflow de CI/CD. Ver `02_PREPARACION_COMMIT.md`.
+
+---
+
+## 9. Registro de correcciones documentales
+
+Aplicadas el 2026-10-30 sobre **este** documento, tras la revisión del contenido publicado. **Ninguna
+modifica resultados de pruebas, código de producción, pruebas, `pom.xml` ni base de datos.** Las cifras de
+las secciones 6 y 7 siguen siendo las de la corrida real del 2026-10-30 15:47 -05:00.
+
+| # | Punto corregido | Qué se afirmó | Qué se corrigió |
+|---|---|---|---|
+| a | Versión de Node (§6, Comando 2) | «Node versión v24.18.0» | Valor tomado de un metadato de sesión, no medido. Verificado ahora: el único `node` en PATH es `C:\Program Files\nodejs\node` → **v26.7.0**, igual que en la línea base. No hubo cambio de versión entre fases. |
+| b | Días en que fallaba la prueba (§1) | «ejecutada un viernes, lunes o martes fallaba» | **Falso.** En el código vigente el dígito 7 solo está restringido el **viernes**. La prueba fallaba un día de cada siete. |
+| c | Texto del fallo (§1) | «No such head found: expected <201> but was <409>» | Cadena **inexistente** en la salida real. Se reemplazó por el extracto verificado de consola: `java.lang.AssertionError: Status expected:<201> but was:<409>` en `RegistroControllerIntegrationTest.java:134`. |
+| d | Causa de la cobertura de ramas baja (§7) | Atribuida a Lombok **sin verificación** | Medido sobre `jacoco.xml` a nivel de método: **709 de 746 ramas perdidas (95,0 %)** pertenecen a `equals`/`hashCode`/`build` generados; **37 (5,0 %)** a métodos escritos a mano, ahora nombrados uno a uno. |
+| e | Alcance de la métrica (§7) | Riesgo de leer la cobertura como calidad | Nueva subsección «Qué afirma y qué NO afirma esta cobertura». |
+| f | Estado de Git (§8, punto 10) | «el repositorio … sin commits» | Desactualizado: hoy existe `e701c75` y está publicado en `origin/main` |
+
+La evidencia vigente de cierre y validación se resume en [09_CIERRE_TECNICO_BRAYAN.md](09_CIERRE_TECNICO_BRAYAN.md).
+

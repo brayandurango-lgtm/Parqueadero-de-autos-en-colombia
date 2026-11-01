@@ -47,4 +47,10 @@ public class RegistroEntradaDTO {
 
     @Size(max = 20, message = "El teléfono del propietario no puede exceder 20 caracteres")
     private String propietarioTelefono;
+
+    /**
+     * Cliente titular a vincular al vehículo durante el ingreso (opcional).
+     * Si no se envía, se conserva la vinculación existente o el vehículo histórico sin cliente.
+     */
+    private Long clienteId;
 }

@@ -49,6 +49,7 @@ application-local.properties
 .env
 .env.*
 !.env.example
+DB_PASSWORD.txt
 
 # Material clave / certificados
 *.pem
