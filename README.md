@@ -71,6 +71,7 @@ Toda la documentación técnica y de diseño elaborada para estas iteraciones se
 * 📄 **[Documento final editable en HTML](./docs/EVIDENCIA_DE_APRENDIZAJE_1_DOCUMENTO_FINAL.html):** fuente del informe; el PDF generado se conserva localmente, fuera del control de versiones.
 * 🗃️ **Esquema PostgreSQL ejecutable:** migraciones Flyway en `src/main/resources/db/migration/`.
 * 📋 **[09. Cierre Técnico - Rol de Brayan (Iteración 2)](./docs/iteracion2/09_CIERRE_TECNICO_BRAYAN.md):** documento técnico con estado de implementación, migraciones, pruebas y evidencias pendientes.
+* 🧭 **[10. Diagramas UML y de arquitectura de Iteración 2](./docs/iteracion2/10_DIAGRAMAS_UML_ITERACION2.md):** arquitectura, relaciones entre componentes, secuencias operativas y modelo de datos renderizados con Mermaid.
 
 ---
 

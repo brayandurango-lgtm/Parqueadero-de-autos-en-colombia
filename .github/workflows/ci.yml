@@ -6,7 +6,7 @@ name: CI - Verificación
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, Urrea ]
   pull_request:
     branches: [ main ]
 

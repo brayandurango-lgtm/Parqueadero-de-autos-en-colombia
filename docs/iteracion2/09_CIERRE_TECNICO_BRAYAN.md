@@ -2,7 +2,7 @@
 
 **Fecha de revisión:** 2026-11-01
 **Responsabilidad:** desarrollo e integración técnica. Este cierre no sustituye los entregables funcionales de Isabella.
-**Estado:** migraciones, arranque y recorrido sintético de cliente/entrada/salida verificados en PostgreSQL 18.6; autenticación, salud, panel y lecturas paginadas comprobadas en navegador. La administración de celdas, los diagramas visuales y la publicación siguen pendientes.
+**Estado:** migraciones, arranque y recorrido sintético de cliente/entrada/salida verificados en PostgreSQL 18.6; autenticación, salud, panel y lecturas paginadas comprobadas en navegador. Los diagramas Mermaid de Iteración 2 están versionados; la validación visual nativa StarUML y la comprobación CI de GitHub siguen pendientes.
 
 ## 1. Alcance implementado en código
 
@@ -47,17 +47,17 @@ Las pruebas Java ejercitan H2; no cuentan como pruebas de PostgreSQL. La evidenc
 
 La conexión, destino y esquema se comprobaron en vivo. La base estaba vacía antes de ejecutar migraciones; con autorización se aplicaron V1–V3 mediante Flyway. No se ejecutaron `baseline`, `repair`, `clean`, `DROP` ni `ddl-auto:update`. El inicio reportó una advertencia de compatibilidad de Flyway 9.22.3 con PostgreSQL 18.6 (última versión declarada como probada: PostgreSQL 15).
 
-La contraseña de conexión se introdujo únicamente en un prompt local oculto; no se registra aquí ni se reutiliza el archivo local de credenciales. La clave JWT se generó en memoria para cada arranque de verificación. Con autorización, se creó un cliente de prueba (documento `TEST20261101A`) y el vehículo ficticio `QWE123`; el registro de entrada/salida quedó cerrado, junto con sus dos comprobantes y auditoría. Estos datos **permanecen en la base local** como historial de prueba. No se crearon altas administrativas de celdas ni se probaron sus escrituras contra PostgreSQL.
+La contraseña de conexión se introdujo únicamente en un prompt local oculto; no se registra aquí. El archivo local obsoleto que contenía credenciales se eliminó y está excluido del historial publicado. La clave JWT se generó en memoria para cada arranque de verificación. Con autorización, se creó un cliente de prueba (documento `TEST20261101A`) y el vehículo ficticio `QWE123`; el registro de entrada/salida quedó cerrado, junto con sus dos comprobantes y auditoría. Estos datos **permanecen en la base local** como historial de prueba. No se crearon altas administrativas de celdas ni se probaron sus escrituras contra PostgreSQL.
 
 ## 5. Interfaz y comprobación manual
 
 El código contiene las vistas de Resumen, Personal, Clientes, Celdas, Entrada, Salida y Novedades. La aplicación se abrió en `http://localhost:8080`; se verificó salud, login de administración, dashboard, cliente ficticio, selección del titular en entrada, ingreso con comprobante QR, búsqueda y salida con liberación de celda, lista/paginación/filtro de celdas y render de observaciones nulas. Los datos sintéticos quedan en la base según la autorización recibida. No se entregan credenciales de demostración en este documento.
 
-## 6. StarUML y evidencias
+## 6. Diagramas y evidencias visuales
 
-Se conserva intacto `docs/staruml/AutosColombia_Iteracion1.mdj`. `docs/staruml/AutosColombia_Iteraciones1y2.mdj` existe y su texto declara diez nombres de diagramas de secuencia y uno de componentes; la inspección del JSON muestra que son **marcadores vacíos**, sin participantes/mensajes de secuencia ni vistas/conexiones de componentes suficientes para considerarlos diagramas terminados. StarUML no está instalado en este equipo; no hubo apertura visual ni exportación de imágenes. El `.mdj` no se declara validado.
+Se conserva `docs/staruml/AutosColombia_Iteracion1.mdj`. `docs/staruml/AutosColombia_Iteraciones1y2.mdj` declara diez diagramas de secuencia y uno de componentes, pero el JSON no contiene elementos de vista suficientes: sigue siendo un **modelo nativo incompleto**, no visualmente validado. Para cubrir la evidencia visual renderizable y mantenerla editable, se añadió [10_DIAGRAMAS_UML_ITERACION2.md](10_DIAGRAMAS_UML_ITERACION2.md), con arquitectura, componentes, secuencias de cliente/entrada/salida y modelo de datos Mermaid. StarUML no está instalado, por lo que no se pudo abrir, completar ni exportar el `.mdj`; si la rúbrica exige imágenes nativas StarUML, ese paso aún requiere la aplicación.
 
-Para cerrar esta evidencia: abrir el archivo de ambas iteraciones en StarUML; completar secuencias de entrada, salida, cancelación, personal, clientes/vinculación y celdas; añadir dependencias/interfaces del diagrama integrado de componentes; contrastar participantes y rutas con el código final; guardar el `.mdj` y exportar imágenes para que Isabella las incorpore. No incluir pagos como implementados.
+No incluir pagos como implementados. Los diagramas Mermaid reflejan las rutas y componentes actuales; las secuencias no pretenden representar operaciones administrativas que no se probaron en vivo.
 
 ## 7. Matriz de insumos para Isabella
 
@@ -70,13 +70,13 @@ Los identificadores de historias deben enlazarse con los que Isabella defina; lo
 | Celdas, mantenimiento y asignación íntegra | Administración y disponibilidad de celdas | `celdas-view`; `/api/v1/celdas` | `CeldasIntegridadIntegrationTest`, `CeldaServiceTest`, `app.test.js` | Secuencias de celdas requeridas; archivo actual vacío | Lista, filtros y paginación verificados en PostgreSQL; escrituras administrativas no recorridas |
 | Entrada/salida/cancelación integradas | Operación de parqueadero (iteraciones 1 y 2) | `entrada-view`, `salida-view`; `/api/v1/registros/*` | `RegistroControllerIntegrationTest`, `CeldasIntegridadIntegrationTest` | Secuencias de operación requeridas; archivo actual vacío | Entrada/salida reales verificadas con registro sintético cerrado; cancelación real no recorrida |
 
-Resultado útil para el plan resumido de Isabella: separar explícitamente evidencia Java/H2, Node, PostgreSQL, navegador y StarUML; no sumar estas verificaciones como si fueran equivalentes. Los wireframes existentes no son un prototipo Figma.
+Resultado útil para el plan resumido de Isabella: separar explícitamente evidencia Java/H2, Node, PostgreSQL, navegador, Mermaid y StarUML; no sumar estas verificaciones como si fueran equivalentes. Los wireframes existentes no son un prototipo Figma.
 
 ## 8. GitHub y publicación
 
-Remoto configurado: `https://github.com/brayandurango-lgtm/Parqueadero-de-autos-en-colombia.git`. El workspace está en `main` y diverge de `origin/main` (un commit local por delante y otro remoto por detrás). El commit local `668a249` agrega `DB_PASSWORD.txt`; la rama remota actual no contiene ese archivo. **No se debe empujar ese commit ni su ascendencia.** Se añadió `DB_PASSWORD.txt` a `.gitignore` y se retiraron valores de acceso del README y de las notas. El archivo fue retirado del índice con `git rm --cached`; la copia local se conservó y quedó ignorada. El archivo conserva una credencial anterior y no debe volver a usarse ni publicarse.
+Remoto configurado: `https://github.com/brayandurango-lgtm/Parqueadero-de-autos-en-colombia.git`. La rama de publicación `Urrea` se creó desde `origin/main`, sin heredar el commit local `668a249`, y se publicó sin force-push. Su commit actual es `2e630f5bfe9879c40ec3abf39596d8f962980410`, con padre `6e3b43ce3a48624c6a14cc02219aa6f6415633a1`; contiene Iteración 2 y los cambios de cierre, y no incluye `DB_PASSWORD.txt`, `.env`, `target` ni logs. La rama antigua que llevaba el nombre `Urrea` se preservó como `archive/Urrea-pre-cierre`; el workspace original continúa en `main`, con su divergencia y cambios locales preservados. El archivo local `DB_PASSWORD.txt` fue eliminado después de rotar la contraseña.
 
-Ruta segura propuesta: conservar la rama local, preparar tras autorización una rama saneada cuyo padre sea el `origin/main` verificado, excluir `DB_PASSWORD.txt`, `.env`, `target`, logs y datos personales, y publicar por fast-forward normal cuando el historial lo permita. No force-push, no rebase, no cambio de identidad Git, no imagen Docker ni despliegue. Antes de commit/push se pedirá confirmación con archivos, remoto/rama, mensaje y operaciones. El workflow local es solo de verificación; GitHub Actions de esta revisión **no se ha ejecutado** y los cambios aún no están publicados.
+La rama `Urrea` ya está publicada y rastrea `origin/Urrea`; no se modificó ni se hizo push de `main`. El pull request no se ha creado y el workflow GitHub Actions de esta revisión no tiene resultado confirmado. No se hizo force-push, rebase, imagen Docker ni despliegue.
 
 ## 9. Límites y estado de cierre
 
@@ -88,6 +88,7 @@ Ruta segura propuesta: conservar la rama local, preparar tras autorización una 
 | PostgreSQL / migraciones | PostgreSQL 18.6 real; V1–V3 validadas/aplicadas; esquema público en V3; advertencia de soporte Flyway pendiente de resolver |
 | Aplicación / login / lecturas en navegador | `http://localhost:8080`; health UP, login, dashboard, clientes y celdas comprobados |
 | Escrituras operativas en PostgreSQL | Alta de cliente y flujo entrada/salida sintéticos verificados; historial permanece local; escrituras administrativas de celdas pendientes |
-| StarUML | Archivo presente pero diagramas vacíos; sin validación visual |
-| GitHub / hash final / CI de esta revisión | Pendiente de autorización y publicación segura |
+| Diagramas Mermaid de Iteración 2 | Versionados en `10_DIAGRAMAS_UML_ITERACION2.md` |
+| StarUML nativo | `.mdj` existente pero incompleto; requiere StarUML para completar y exportar vistas |
+| GitHub / hash final / CI de esta revisión | Rama `Urrea` publicada en `2e630f5`; PR y CI aún sin resultado confirmado |
 | Isabella | Requisitos, historias, casos de uso, mockups y plan siguen siendo sus entregables |
